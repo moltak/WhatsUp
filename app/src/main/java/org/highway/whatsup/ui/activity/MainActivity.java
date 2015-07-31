@@ -1,5 +1,6 @@
 package org.highway.whatsup.ui.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,15 +10,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 
 import org.highway.whatsup.R;
+import org.highway.whatsup.service.LocationUpdateService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.setDrawerIndicatorEnabled(true);
         mainDrawerLayout.setDrawerListener(drawerToggle);
         mainDrawerNavigationView.setNavigationItemSelectedListener(new MainNavitationItemSelectedListener());
+
+        startService(new Intent(this, LocationUpdateService.class));
         setupMapFragment(savedInstanceState);
     }
 
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, LocationUpdateService.class));
+        super.onDestroy();
     }
 
     private class MainNavitationItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
