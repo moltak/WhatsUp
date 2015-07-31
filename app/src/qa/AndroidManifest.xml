@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="WhatsUp QA"
             tools:replace="android:label">
             <intent-filter>

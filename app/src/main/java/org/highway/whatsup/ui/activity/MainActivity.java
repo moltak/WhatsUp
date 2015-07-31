@@ -1,9 +1,9 @@
-package org.highway.whatsup;
+package org.highway.whatsup.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import org.highway.whatsup.R;
 
 public class MainActivity extends AppCompatActivity {
 
