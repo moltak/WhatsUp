@@ -1,5 +1,32 @@
 apply plugin: 'java'
 
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = 1.7
+//noinspection GroovyUnusedAssignment
+targetCompatibility = 1.7
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    provided "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    compile "io.reactivex:rxjava:${rxJavaVersion}"
+    provided "org.glassfish:javax.annotation:${javaxAnnotationVersion}"
+    compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
+    compile "com.squareup.okhttp:okhttp:${okHttpVersion}"
+    compile "com.squareup.okhttp:okhttp-urlconnection:${okHttpVersion}"
+
+    testCompile "junit:junit:${jUnitVersion}"
+    testCompile "org.assertj:assertj-core:${assertJVersion}"
+    testCompile "org.mockito:mockito-core:${mockitoVersion}"
+    testCompile "org.robolectric:robolectric:${robolectricVersion}"
 }
