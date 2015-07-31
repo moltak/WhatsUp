@@ -1,0 +1,15 @@
+ext {
+    // common libraries version
+    daggerVersion = '2.0'
+    rxJavaVersion = '1.0.12'
+    rxAndroidVersion = '0.25.0'
+    javaxAnnotationVersion = '10.0-b28'
+    retrofitVersion = '1.9.0'
+    okHttpVersion = '2.3.0'
+
+    // common testing libraries version
+    robolectricVersion = '3.0'
+    jUnitVersion = '4.12'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '1.9.5'
+}

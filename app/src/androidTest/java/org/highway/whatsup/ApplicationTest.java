@@ -1,4 +1,4 @@
-package org.highway.wahtsup;
+package org.highway.whatsup;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
