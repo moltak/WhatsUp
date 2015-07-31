@@ -3,6 +3,7 @@ package org.highway.whatsup.ui.activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 
 import org.highway.whatsup.R;
 
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.setDrawerIndicatorEnabled(true);
         mainDrawerLayout.setDrawerListener(drawerToggle);
         mainDrawerNavigationView.setNavigationItemSelectedListener(new MainNavitationItemSelectedListener());
+        setupMapFragment(savedInstanceState);
     }
 
     @Override
@@ -55,5 +62,35 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(MenuItem menuItem) {
             return false;
         }
+    }
+
+    private void setupMapFragment(Bundle savedInstanceState) {
+        // It isn't possible to set a fragment's id programmatically so we set a tag instead and
+        // search for it using that.
+        SupportMapFragment mapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentByTag("map_fragment");
+
+        // We only create a fragment if it doesn't already exist.
+        if (mapFragment == null) {
+            // To programmatically add the map, we first create a SupportMapFragment.
+            mapFragment = SupportMapFragment.newInstance();
+
+            // Then we add it using a FragmentTransaction.
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer, mapFragment, "map_fragment");
+            fragmentTransaction.commit();
+        }
+
+        if (savedInstanceState == null) {
+            // First incarnation of this activity.
+            mapFragment.setRetainInstance(true);
+        }
+
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap map) {
+            }
+        });
     }
 }
