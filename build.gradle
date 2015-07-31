@@ -1,4 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: 'buildsystem/dependencies.gradle'
 
 buildscript {
     repositories {
@@ -16,4 +17,16 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+task domainUnitTests(dependsOn: [':domain:test']) {
+    description 'Run unit tests for both domain and data layers.'
+}
+
+task dataUnitTests(dependsOn: [':data:test']) {
+    description 'Run unit tests for both domain and data layers.'
+}
+
+task unitTests(dependsOn: ['domainUnitTests', 'dataUnitTests']) {
+    description 'Run unit tests for both domain and data layers.'
 }
