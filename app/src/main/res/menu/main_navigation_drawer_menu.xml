@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/mainNavigationDrawerItemUser"
+            android:checked="true"
+            android:title="User"/>
+        <item
+            android:id="@+id/mainNavigationDrawerItemHistory"
+            android:title="History"/>
+    </group>
+    <!--<item-->
+        <!--android:id="@+id/navigation_subheader"-->
+        <!--android:title="Sub Header">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/navigation_sub_item_1"-->
+                <!--android:icon="@drawable/messenger_bubble_small_blue"-->
+                <!--android:title="Sub Label1"/>-->
+            <!--<item-->
+                <!--android:id="@+id/navigation_sub_item_2"-->
+                <!--android:icon="@drawable/messenger_bubble_small_blue"-->
+                <!--android:title="Sub Label2"/>-->
+        <!--</menu>-->
+    <!--</item>-->
+</menu>
