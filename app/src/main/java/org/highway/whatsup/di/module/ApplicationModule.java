@@ -1,4 +1,4 @@
-package org.highway.whatsup.di;
+package org.highway.whatsup.di.module;
 
 import android.content.Context;
 

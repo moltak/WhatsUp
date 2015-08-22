@@ -1,6 +1,8 @@
-package org.highway.whatsup.di;
+package org.highway.whatsup.di.component;
 
 import android.content.Context;
+
+import org.highway.whatsup.di.module.ApplicationModule;
 
 import javax.inject.Singleton;
 

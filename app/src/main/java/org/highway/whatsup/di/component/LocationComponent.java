@@ -1,7 +1,7 @@
-package org.highway.whatsup.location;
+package org.highway.whatsup.di.component;
 
-import org.highway.whatsup.di.ApplicationComponent;
-import org.highway.whatsup.di.scope.ForApplication;
+import org.highway.whatsup.data.scope.ForApplication;
+import org.highway.whatsup.di.module.LocationModule;
 import org.highway.whatsup.service.LocationUpdateService;
 
 import dagger.Component;

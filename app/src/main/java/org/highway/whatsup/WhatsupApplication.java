@@ -2,12 +2,12 @@ package org.highway.whatsup;
 
 import android.support.multidex.MultiDexApplication;
 
-import org.highway.whatsup.di.ApplicationComponent;
-import org.highway.whatsup.di.ApplicationModule;
-import org.highway.whatsup.di.DaggerApplicationComponent;
-import org.highway.whatsup.location.DaggerLocationComponent;
-import org.highway.whatsup.location.LocationComponent;
-import org.highway.whatsup.location.LocationModule;
+import org.highway.whatsup.di.component.ApplicationComponent;
+import org.highway.whatsup.di.component.DaggerApplicationComponent;
+import org.highway.whatsup.di.component.DaggerLocationComponent;
+import org.highway.whatsup.di.module.ApplicationModule;
+import org.highway.whatsup.di.component.LocationComponent;
+import org.highway.whatsup.di.module.LocationModule;
 
 /**
  * Created by engeng on 7/31/15.
