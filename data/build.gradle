@@ -1,32 +1,61 @@
-apply plugin: 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = 1.7
-//noinspection GroovyUnusedAssignment
-targetCompatibility = 1.7
-
-configurations {
-    provided
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.+'
+    }
 }
 
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode 1
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'  // Some libraries have issues with this
+        disable 'OldTargetApi'    // Due to Robolectric that modifies the manifest when running tests
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided "com.google.dagger:dagger-compiler:${daggerVersion}"
+    apt "com.google.dagger:dagger-compiler:${daggerVersion}"
     compile "com.google.dagger:dagger:${daggerVersion}"
     compile "io.reactivex:rxjava:${rxJavaVersion}"
     provided "org.glassfish:javax.annotation:${javaxAnnotationVersion}"
     compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
     compile "com.squareup.okhttp:okhttp:${okHttpVersion}"
     compile "com.squareup.okhttp:okhttp-urlconnection:${okHttpVersion}"
+    compile "com.google.android.gms:play-services-maps:${playServiceVersion}"
 
     testCompile "junit:junit:${jUnitVersion}"
     testCompile "org.assertj:assertj-core:${assertJVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
     testCompile "org.robolectric:robolectric:${robolectricVersion}"
+    testCompile "com.squareup.okhttp:mockwebserver:${okHttpVersion}"
 }

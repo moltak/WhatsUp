@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -12,30 +13,35 @@ apply plugin: 'com.android.application'
 apply plugin: 'idea'
 apply plugin: 'com.neenbedankt.android-apt'
 
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 def appVersionCode = 1
 def appVersionName = "0.1"
 def appVersionDesc = "alpha"
-def appReleaseDesc = "WhatsUp-cn" + appVersionCode + '-v' + appVersionName + '-' + appVersionDesc + '.apk'
-def appMinSdkVersion = 15
-def appTargetSdkVersion = 22
+def appReleaseDesc = "whatsupgi-cn" + appVersionCode + '-v' + appVersionName + '-' + appVersionDesc + '.apk'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc3"
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
-        applicationId "org.highway.whatsup"
-        minSdkVersion appMinSdkVersion
-        targetSdkVersion appTargetSdkVersion
+        applicationId "com.kabbler.app"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode appVersionCode
         versionName appVersionName
+        multiDexEnabled true
     }
     signingConfigs {
         release {
-            storeFile file("../buildsystem/whatsup_keystore.jks")
-            storePassword "whatsup!!"
-            keyAlias "org.highway.whatsup"
-            keyPassword "whatsup!!"
+            storeFile file("../keystore/kabbler.jks")
+            storePassword "kabb_key_pass"
+            keyAlias "kabbler_app"
+            keyPassword "kabbler_app_key_pass"
         }
     }
     buildTypes {
@@ -43,13 +49,13 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            debuggable true
+//            debuggable true
         }
     }
     productFlavors {
         production{}
         qa {
-            applicationId "com.whatsup.qa"
+            applicationId "com.kabbler.qa"
         }
     }
     lintOptions {
@@ -75,38 +81,55 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(":domain")
 
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.google.android.gms:play-services-analytics:7.5.0'
-    compile 'com.google.android.gms:play-services-identity:7.5.0'
-    compile 'com.google.android.gms:play-services-gcm:7.5.0'
-    compile 'com.google.android.gms:play-services-location:7.5.0'
-    compile 'com.google.android.gms:play-services-maps:7.5.0'
+    compile project (':domain')
+
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+    compile "com.android.support:recyclerview-v7:23.0.0"
+    compile "com.google.android.gms:play-services-analytics:${playServiceVersion}"
+    compile "com.google.android.gms:play-services-identity:${playServiceVersion}"
+    compile "com.google.android.gms:play-services-gcm:${playServiceVersion}"
+    compile "com.google.android.gms:play-services-location:${playServiceVersion}"
+    compile "com.google.android.gms:play-services-maps:${playServiceVersion}"
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.+'
-    compile 'com.squareup:otto:1.3.8'
 
+    compile 'com.orhanobut:logger:1.+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 
     // common libraries
+    compile "info.android15.nucleus:nucleus:${nucleusVersion}"
+    compile "info.android15.nucleus:nucleus-support-v4:${nucleusVersion}"
+    compile "info.android15.nucleus:nucleus-support-v7:${nucleusVersion}"
+
     compile "com.google.dagger:dagger:${daggerVersion}"
     apt "com.google.dagger:dagger-compiler:${daggerVersion}"
     compile "io.reactivex:rxandroid:${rxAndroidVersion}"
     provided "org.glassfish:javax.annotation:${javaxAnnotationVersion}"
+
+    compile "com.squareup:otto:${ottoBusVersion}"
 
     testCompile "junit:junit:${jUnitVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
     testCompile "com.squareup.okhttp:mockwebserver:${okHttpVersion}"
 }
 
+idea {
+    module {
+        testOutputDir = file('build/test-classes/debug')
+    }
+}
+
 def srcfolder = 'build/outputs/apk/'
-def dstfolder = System.getProperty("user.home") + "/Downloads" + "/WhatsUp"
+def dstfolder = System.getProperty("user.home") + "/Downloads" + "/kabbler"
 
 task copyRelease(type: Copy) {
     from srcfolder
