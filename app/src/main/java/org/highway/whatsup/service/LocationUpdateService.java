@@ -17,8 +17,7 @@ import javax.inject.Inject;
 
 public class LocationUpdateService extends Service {
 
-    @Inject
-    LocationController locationController;
+    @Inject LocationController locationController;
     private final int updateTime = 5000;
 
     @Override
