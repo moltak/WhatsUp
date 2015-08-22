@@ -13,14 +13,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'idea'
 apply plugin: 'com.neenbedankt.android-apt'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 def appVersionCode = 1
 def appVersionName = "0.1"
 def appVersionDesc = "alpha"
-def appReleaseDesc = "whatsupgi-cn" + appVersionCode + '-v' + appVersionName + '-' + appVersionDesc + '.apk'
+def appReleaseDesc = "WhatsUp-cn" + appVersionCode + '-v' + appVersionName + '-' + appVersionDesc + '.apk'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -29,7 +25,7 @@ android {
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
-        applicationId "com.kabbler.app"
+        applicationId "org.highway.whatsup"
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode appVersionCode
@@ -49,13 +45,12 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-//            debuggable true
         }
     }
     productFlavors {
         production{}
         qa {
-            applicationId "com.kabbler.qa"
+            applicationId "org.highway.qa"
         }
     }
     lintOptions {
