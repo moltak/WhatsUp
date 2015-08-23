@@ -1,5 +1,7 @@
 package org.highway.whatsup.data.physics;
 
+import javax.inject.Inject;
+
 /**
  * Created by engeng on 8/22/15.
  * 위도 37에서 경도 1도는 88.9km
@@ -11,6 +13,8 @@ package org.highway.whatsup.data.physics;
 public class DefaultBoundsCalculator implements BoundsCalculator {
     private final double lat1Degree = 0.009043717329571148f;
     private final double lng1Degree = 0.011248593925759;
+
+    @Inject public DefaultBoundsCalculator() {}
 
     @Override
     public BoundsCalculator.Bounds getBounds(double lat, double lng) {
