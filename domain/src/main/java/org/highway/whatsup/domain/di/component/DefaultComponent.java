@@ -2,10 +2,12 @@ package org.highway.whatsup.domain.di.component;
 
 import org.highway.whatsup.data.physics.BoundsCalculator;
 import org.highway.whatsup.data.physics.SpeedMeter;
+import org.highway.whatsup.data.rest.KoExApiProviderInterface;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
-import org.highway.whatsup.domain.function.KoExApiActionCreator;
-import org.highway.whatsup.domain.di.module.KoExApiModule;
+import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
+import org.highway.whatsup.domain.di.module.KoExApiProviderModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
+import org.highway.whatsup.domain.function.DefaultActionCreator;
 
 import dagger.Component;
 
@@ -14,13 +16,15 @@ import dagger.Component;
  */
 @Component(
     modules = {
-            KoExApiModule.class,
+            DefaultActionCreatorModule.class,
             SpeedMeterModule.class,
-            BoundsCalculatorModule.class
+            BoundsCalculatorModule.class,
+            KoExApiProviderModule.class
     }
 )
 public interface DefaultComponent {
-    KoExApiActionCreator koExApiActionCreator();
+    DefaultActionCreator actionCreator();
     SpeedMeter speedMeter();
     BoundsCalculator boundsCalculator();
+    KoExApiProviderInterface koExApiProvider();
 }
