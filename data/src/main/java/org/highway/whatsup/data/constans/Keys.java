@@ -1,4 +1,4 @@
-package org.highway.whatsup.constans;
+package org.highway.whatsup.data.constans;
 
 /**
  * Created by engeng on 8/22/15.
