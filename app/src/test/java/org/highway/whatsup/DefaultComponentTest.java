@@ -1,10 +1,10 @@
 package org.highway.whatsup;
 
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoreaExpressCorporationApi;
+import org.highway.whatsup.data.rest.KoExApiProcessor;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
-import org.highway.whatsup.domain.di.module.KoreaExpressCorporationApiModule;
+import org.highway.whatsup.domain.di.module.KoExApiModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,15 +15,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by engeng on 8/22/15.
  */
-public class KoreaExpressCorporationApiTest {
+public class DefaultComponentTest {
 
-    private KoreaExpressCorporationApi api;
+    private KoExApiProcessor api;
     private SpeedMeter speedMeter;
 
     @Before
     public void setUp() throws Exception {
         DefaultComponent component = DaggerDefaultComponent.builder()
-                .koreaExpressCorporationApiModule(new KoreaExpressCorporationApiModule())
+                .koExApiModule(new KoExApiModule())
                 .speedMeterModule(new SpeedMeterModule())
                 .build();
         api = component.koreaExpressCorporationApi();

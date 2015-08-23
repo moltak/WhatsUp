@@ -1,8 +1,8 @@
 package org.highway.whatsup.domain.di.component;
 
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoreaExpressCorporationApi;
-import org.highway.whatsup.domain.di.module.KoreaExpressCorporationApiModule;
+import org.highway.whatsup.data.rest.KoExApiProcessor;
+import org.highway.whatsup.domain.di.module.KoExApiModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 
 import dagger.Component;
@@ -12,11 +12,11 @@ import dagger.Component;
  */
 @Component(
     modules = {
-            KoreaExpressCorporationApiModule.class,
+            KoExApiModule.class,
             SpeedMeterModule.class
     }
 )
 public interface DefaultComponent {
-    KoreaExpressCorporationApi koreaExpressCorporationApi();
+    KoExApiProcessor koreaExpressCorporationApi();
     SpeedMeter speedMeter();
 }
