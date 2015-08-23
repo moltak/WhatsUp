@@ -1,4 +1,4 @@
-package org.highway.whatsup.data.rest;
+package org.highway.whatsup.data.rest.adapter;
 
 import retrofit.RestAdapter;
 import retrofit.converter.SimpleXMLConverter;
@@ -6,7 +6,7 @@ import retrofit.converter.SimpleXMLConverter;
 /**
  * Created by engeng on 8/22/15.
  */
-public class KoreaExCoAdapter {
+public class KoExRestAdapter {
     public static RestAdapter getAdapter() {
         return new RestAdapter.Builder()
                 .setClient(OkHttpClientFactory.getHttpClient())

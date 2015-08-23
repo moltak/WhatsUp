@@ -1,10 +1,10 @@
 package org.highway.whatsup.data.test;
 
 import org.highway.whatsup.data.constans.Keys;
-import org.highway.whatsup.data.rest.KoreaExCctv;
-import org.highway.whatsup.data.rest.KoreaExCoAccident;
-import org.highway.whatsup.data.rest.KoreaExCoAdapter;
-import org.highway.whatsup.data.rest.KoreaExEvent;
+import org.highway.whatsup.data.rest.functions.KoExCctvApi;
+import org.highway.whatsup.data.rest.functions.KoExAccidentApi;
+import org.highway.whatsup.data.rest.adapter.KoExRestAdapter;
+import org.highway.whatsup.data.rest.functions.KoExEventApi;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by engeng on 8/22/15.
  */
-public class KoreaExCoApiTest {
+public class KoExApiTest {
 
     TestSubscriber subscriber;
 
@@ -27,29 +27,29 @@ public class KoreaExCoApiTest {
 
     @Test
     public void testAccidentApi() {
-        KoreaExCoAccident.Params params = new KoreaExCoAccident.Params(
+        KoExAccidentApi.Params params = new KoExAccidentApi.Params(
                 Keys.HIGHWAYKEY_API_KEY, "2", "ex", 127.100000, 34.100000, 128.890000, 39.100000);
 
-        KoreaExCoAdapter.getAdapter()
-                .create(KoreaExCoAccident.Request.class)
+        KoExRestAdapter.getAdapter()
+                .create(KoExAccidentApi.Request.class)
                 .get(params.toMap())
                 .subscribe(subscriber);
 
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
 
-        KoreaExCoAccident.Response r = (KoreaExCoAccident.Response) subscriber.getOnNextEvents().get(0);
+        KoExAccidentApi.Response r = (KoExAccidentApi.Response) subscriber.getOnNextEvents().get(0);
         assertThat(r.getRs(), nullValue());
     }
 
     @Test
     public void testEventApi() {
-        KoreaExEvent.Params params = new KoreaExEvent.Params(
+        KoExEventApi.Params params = new KoExEventApi.Params(
                 Keys.HIGHWAYKEY_API_KEY, "2", "ex", 127.100000, 34.100000, 128.890000, 39.100000
         );
 
-        KoreaExCoAdapter.getAdapter()
-                .create(KoreaExEvent.Request.class)
+        KoExRestAdapter.getAdapter()
+                .create(KoExEventApi.Request.class)
                 .get(params.toMap())
                 .subscribe(subscriber);
 
@@ -59,12 +59,12 @@ public class KoreaExCoApiTest {
 
     @Test
     public void testCctvApi() {
-        KoreaExCctv.Params params = new KoreaExCctv.Params(
+        KoExCctvApi.Params params = new KoExCctvApi.Params(
                 Keys.HIGHWAYKEY_API_KEY, "2", "ex", 127.100000, 34.100000, 128.890000, 39.100000
         );
 
-        KoreaExCoAdapter.getAdapter()
-                .create(KoreaExCctv.Request.class)
+        KoExRestAdapter.getAdapter()
+                .create(KoExCctvApi.Request.class)
                 .get(params.toMap())
                 .subscribe(subscriber);
 

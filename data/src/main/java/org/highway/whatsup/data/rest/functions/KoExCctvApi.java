@@ -1,6 +1,11 @@
-package org.highway.whatsup.data.rest;
+package org.highway.whatsup.data.rest.functions;
+
+import org.highway.whatsup.data.entity.KoExCctvEntity;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.http.GET;
@@ -10,7 +15,7 @@ import rx.Observable;
 /**
  * Created by engeng on 8/23/15.
  */
-public class KoreaExCctv {
+public class KoExCctvApi {
 
     public interface Request {
         @GET("/NCCTVInfo")
@@ -46,6 +51,25 @@ public class KoreaExCctv {
     }
 
     public static class Response {
+        @Element(name = "CoordType")
+        private String CoordType;
 
+        @Element(name = "DataCount")
+        private int DataCount;
+
+        @ElementList(name = "data")
+        private List<KoExCctvEntity> datas;
+
+        public String getCoordType() {
+            return CoordType;
+        }
+
+        public int getDataCount() {
+            return DataCount;
+        }
+
+        public List<KoExCctvEntity> getDatas() {
+            return datas;
+        }
     }
 }
