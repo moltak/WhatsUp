@@ -3,13 +3,11 @@ package org.highway.whatsup.domain.test;
 import org.highway.whatsup.data.physics.BoundsCalculator;
 import org.highway.whatsup.data.physics.SpeedMeter;
 import org.highway.whatsup.data.rest.KoExApiProvider;
-import org.highway.whatsup.data.rest.KoExApiProviderInterface;
 import org.highway.whatsup.domain.data.ExpressData;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
-import org.highway.whatsup.domain.di.module.KoExApiProviderModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.highway.whatsup.domain.function.DefaultActionCreator;
 import org.junit.Before;
@@ -29,7 +27,7 @@ public class DefaultActionCreatorTest {
     private DefaultActionCreator actionCreator;
     private SpeedMeter speedMeter;
     private BoundsCalculator boundsCalculator;
-    private KoExApiProviderInterface koExApiProvider;
+    private KoExApiProvider koExApiProvider;
     private double lat = 36.0788899991, lng = 127.10194;
 
     @Before
@@ -38,7 +36,6 @@ public class DefaultActionCreatorTest {
                 .defaultActionCreatorModule(new DefaultActionCreatorModule())
                 .speedMeterModule(new SpeedMeterModule())
                 .boundsCalculatorModule(new BoundsCalculatorModule())
-                .koExApiProviderModule(new KoExApiProviderModule())
                 .build();
         actionCreator = component.actionCreator();
         speedMeter = component.speedMeter();

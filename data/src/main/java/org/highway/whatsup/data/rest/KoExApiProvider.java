@@ -14,7 +14,7 @@ import rx.Observable;
 /**
  * Created by engeng on 8/23/15.
  */
-public class KoExApiProvider implements KoExApiProviderInterface {
+public class KoExApiProvider {
 
     @Inject KoExApiProvider() {}
 
