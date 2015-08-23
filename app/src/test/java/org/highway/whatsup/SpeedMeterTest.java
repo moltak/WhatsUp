@@ -9,10 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by engeng on 8/22/15.
