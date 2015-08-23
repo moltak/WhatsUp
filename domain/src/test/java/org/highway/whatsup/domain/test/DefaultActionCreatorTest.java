@@ -71,4 +71,11 @@ public class DefaultActionCreatorTest {
         assertThat(expressData.getCctvUrl(), not(""));
         assertThat(expressData.getMsg(), not(""));
     }
+
+    @Test
+    public void shouldReturnExpressDataGivenSpeedGps() {
+        ExpressData data = actionCreator.doit(2, lat, lng);
+        assertThat(data, notNullValue());
+        assertThat(actionCreator.getSpeedProgression(), is(SpeedMeter.Progression.LOW_SPEED));
+    }
 }

@@ -1,5 +1,6 @@
 package org.highway.whatsup.data.rest.functions;
 
+import org.highway.whatsup.data.entity.KoExEventEntity;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -59,7 +60,7 @@ public class KoExEventApi {
         int DataCount;
 
         @ElementList(name = "data")
-        List<KoExEventApi> data;
+        List<KoExEventEntity> data;
 
         public String getCoordType() {
             return CoordType;
@@ -69,7 +70,7 @@ public class KoExEventApi {
             return DataCount;
         }
 
-        public List<KoExEventApi> getData() {
+        public List<KoExEventEntity> getData() {
             return data;
         }
     }
