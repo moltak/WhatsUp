@@ -1,6 +1,6 @@
 package org.highway.whatsup;
 
-import org.highway.whatsup.domain.SpeedMeter.BoundaryCalulator;
+import org.highway.whatsup.data.physics.DefaultBoundsCalculator;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by engeng on 8/22/15.
  */
-public class BoundaryCalulatorTest {
+public class BoundsCalculatorTest {
     final double lat = 36.338123f, lng = 127.393435f;
 
     @Test
@@ -29,8 +29,8 @@ public class BoundaryCalulatorTest {
 
     @Test
     public void testMakeBoundary() {
-        BoundaryCalulator boundaryCalulator = new BoundaryCalulator();
-        BoundaryCalulator.Bounds bounds = boundaryCalulator.getBoundary(lat, lng);
+        DefaultBoundsCalculator defaultBoundsCalculator = new DefaultBoundsCalculator();
+        DefaultBoundsCalculator.Bounds bounds = defaultBoundsCalculator.getBounds(lat, lng);
         assertThat((int)haversine(
                 bounds.getLat1(), bounds.getLng1(),
                 bounds.getLat2(), bounds.getLng2()),
