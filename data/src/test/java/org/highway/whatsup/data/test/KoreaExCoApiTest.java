@@ -1,6 +1,7 @@
 package org.highway.whatsup.data.test;
 
 import org.highway.whatsup.data.constans.Keys;
+import org.highway.whatsup.data.rest.KoreaExCctv;
 import org.highway.whatsup.data.rest.KoreaExCoAccident;
 import org.highway.whatsup.data.rest.KoreaExCoAdapter;
 import org.highway.whatsup.data.rest.KoreaExEvent;
@@ -49,6 +50,21 @@ public class KoreaExCoApiTest {
 
         KoreaExCoAdapter.getAdapter()
                 .create(KoreaExEvent.Request.class)
+                .get(params.toMap())
+                .subscribe(subscriber);
+
+        subscriber.awaitTerminalEvent();
+        subscriber.assertNoErrors();
+    }
+
+    @Test
+    public void testCctvApi() {
+        KoreaExCctv.Params params = new KoreaExCctv.Params(
+                Keys.HIGHWAYKEY_API_KEY, "2", "ex", 127.100000, 34.100000, 128.890000, 39.100000
+        );
+
+        KoreaExCoAdapter.getAdapter()
+                .create(KoreaExCctv.Request.class)
                 .get(params.toMap())
                 .subscribe(subscriber);
 
