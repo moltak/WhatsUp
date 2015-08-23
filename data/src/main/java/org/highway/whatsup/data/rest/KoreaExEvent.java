@@ -1,6 +1,5 @@
 package org.highway.whatsup.data.rest;
 
-import org.highway.whatsup.data.entity.KoExAccidentEntity;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -16,70 +15,62 @@ import rx.Observable;
 /**
  * Created by engeng on 8/22/15.
  */
-public class KoreaExCoAccident {
+public class KoreaExEvent {
 
     public interface Request {
-        @GET("/NIncidentIdentity")
+        @GET("/NEventIdentity")
         Observable<Response> get(@QueryMap Map<String, Object> map);
     }
 
     public static class Params {
-        private final String key, reqType, type;
-        private final double minX, minY, maxX, maxY;
+        private final String key, ReqType, type;
+        private final double MinX, MinY, MaxX, MaxY;
 
         public Params(String key, String reqType, String type,
                       double minX, double minY, double maxX, double maxY) {
             this.key = key;
-            this.reqType = reqType;
+            ReqType = reqType;
             this.type = type;
-            this.minX = minX;
-            this.minY = minY;
-            this.maxX = maxX;
-            this.maxY = maxY;
+            MinX = minX;
+            MinY = minY;
+            MaxX = maxX;
+            MaxY = maxY;
         }
 
         public Map<String, Object> toMap() {
             Map<String, Object> map = new HashMap<>();
             map.put("key", key);
-            map.put("ReqType", reqType);
+            map.put("ReqType", ReqType);
             map.put("type", type);
-            map.put("MinX", minX);
-            map.put("MinY", minY);
-            map.put("MaxX", maxX);
-            map.put("MaxY", maxY);
+            map.put("MinX", MinX);
+            map.put("MinY", MinY);
+            map.put("MaxX", MaxX);
+            map.put("MaxY", MaxY);
             return map;
         }
     }
 
     @Root(name = "response")
     public static class Response {
+        @Element(name = "CoodType", type = String.class)
+        String CoordType;
 
-        @Element(name = "rs", type = String.class)
-        String rs;
-
-        @Element(name = "CoordType")
-        String coordType;
-
-        @Element(name = "DataCount")
-        int dataCount;
+        @Element(name = "DataCount", type = Integer.class)
+        int DataCount;
 
         @ElementList(name = "data")
-        List<KoExAccidentEntity> data;
+        List<KoreaExEvent> data;
 
         public String getCoordType() {
-            return coordType;
+            return CoordType;
         }
 
         public int getDataCount() {
-            return dataCount;
+            return DataCount;
         }
 
-        public List<KoExAccidentEntity> getData() {
+        public List<KoreaExEvent> getData() {
             return data;
-        }
-
-        public String getRs() {
-            return rs;
         }
     }
 }

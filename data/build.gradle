@@ -49,6 +49,7 @@ dependencies {
     compile "io.reactivex:rxjava:${rxJavaVersion}"
     provided "org.glassfish:javax.annotation:${javaxAnnotationVersion}"
     compile "com.squareup.retrofit:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit:converter-simplexml:${retrofitVersion}"
     compile "com.squareup.okhttp:okhttp:${okHttpVersion}"
     compile "com.squareup.okhttp:okhttp-urlconnection:${okHttpVersion}"
     compile "com.google.android.gms:play-services-maps:${playServiceVersion}"
