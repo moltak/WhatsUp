@@ -1,7 +1,7 @@
 package org.highway.whatsup.domain.di.component;
 
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoExApiProcessor;
+import org.highway.whatsup.domain.function.KoExApiActionCreator;
 import org.highway.whatsup.domain.di.module.KoExApiModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 
@@ -17,6 +17,6 @@ import dagger.Component;
     }
 )
 public interface DefaultComponent {
-    KoExApiProcessor koreaExpressCorporationApi();
+    KoExApiActionCreator koreaExpressCorporationApi();
     SpeedMeter speedMeter();
 }

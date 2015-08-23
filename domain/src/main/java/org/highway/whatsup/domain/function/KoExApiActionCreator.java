@@ -1,15 +1,15 @@
-package org.highway.whatsup.data.rest;
+package org.highway.whatsup.domain.function;
 
 import org.highway.whatsup.data.physics.BoundsCalculator;
 
 /**
  * Created by engeng on 8/22/15.
  */
-public class KoExApiProcessor {
+public class KoExApiActionCreator {
 
     private final BoundsCalculator boundsCalculator;
 
-    public KoExApiProcessor(BoundsCalculator boundsCalculator) {
+    public KoExApiActionCreator(BoundsCalculator boundsCalculator) {
         this.boundsCalculator = boundsCalculator;
     }
 }

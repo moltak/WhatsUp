@@ -1,4 +1,4 @@
-package org.highway.whatsup;
+package org.highway.whatsup.data.test;
 
 import android.location.Location;
 

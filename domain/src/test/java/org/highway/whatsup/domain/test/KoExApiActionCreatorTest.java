@@ -1,7 +1,7 @@
-package org.highway.whatsup;
+package org.highway.whatsup.domain.test;
 
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoExApiProcessor;
+import org.highway.whatsup.domain.function.KoExApiActionCreator;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
 import org.highway.whatsup.domain.di.module.KoExApiModule;
@@ -15,9 +15,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by engeng on 8/22/15.
  */
-public class DefaultComponentTest {
+public class KoExApiActionCreatorTest {
 
-    private KoExApiProcessor api;
+    private KoExApiActionCreator api;
     private SpeedMeter speedMeter;
 
     @Before

@@ -1,7 +1,7 @@
 package org.highway.whatsup.domain.di.module;
 
 import org.highway.whatsup.data.physics.DefaultBoundsCalculator;
-import org.highway.whatsup.data.rest.KoExApiProcessor;
+import org.highway.whatsup.domain.function.KoExApiActionCreator;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,8 +12,8 @@ import dagger.Provides;
 @Module
 public class KoExApiModule {
     @Provides
-    KoExApiProcessor providesKoreaExpressCorporationApi(
+    KoExApiActionCreator providesKoreaExpressCorporationApi(
             DefaultBoundsCalculator defaultBoundsCalculator) {
-        return new KoExApiProcessor(defaultBoundsCalculator);
+        return new KoExApiActionCreator(defaultBoundsCalculator);
     }
 }
