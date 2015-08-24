@@ -2,7 +2,7 @@ package org.highway.whatsup.domain.test;
 
 import org.highway.whatsup.data.physics.BoundsCalculator;
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoExApiProvider;
+import org.highway.whatsup.data.rest.koex.KoExApiProvider;
 import org.highway.whatsup.domain.data.ExpressData;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
@@ -53,29 +53,22 @@ public class DefaultActionCreatorTest {
 
     @Test
     public void whenSpeedAbove10KmItHasNoExpressData() {
-        SpeedMeter.Progression progression = actionCreator.getProgression(30);
-        assertThat(progression, is(SpeedMeter.Progression.HIGH_SPEED));
+        SpeedMeter.Progression progressionSpeed = actionCreator.getProgression(30);
+        assertThat(progressionSpeed, is(SpeedMeter.Progression.HIGH_SPEED));
 
-        ExpressData expressData = actionCreator.getExpressWayData(lat, lng);
+        ExpressData expressData = actionCreator.getExpressWayData(30, lat, lng, progressionSpeed);
         assertThat(expressData, nullValue());
     }
 
     @Test
     public void whenSpeedBelow10KmItHasExpressData() {
-        SpeedMeter.Progression progression = actionCreator.getProgression(2);
-        assertThat(progression, is(SpeedMeter.Progression.LOW_SPEED));
+        SpeedMeter.Progression progressionSpeed = actionCreator.getProgression(2);
+        assertThat(progressionSpeed, is(SpeedMeter.Progression.LOW_SPEED));
 
-        ExpressData expressData = actionCreator.getExpressWayData(lat, lng);
+        ExpressData expressData = actionCreator.getExpressWayData(2, lat, lng, progressionSpeed);
         assertThat(expressData, notNullValue());
 
         assertThat(expressData.getCctvUrl(), not(""));
         assertThat(expressData.getMsg(), not(""));
-    }
-
-    @Test
-    public void shouldReturnExpressDataGivenSpeedGps() {
-        ExpressData data = actionCreator.doit(2, lat, lng);
-        assertThat(data, notNullValue());
-        assertThat(actionCreator.getSpeedProgression(), is(SpeedMeter.Progression.LOW_SPEED));
     }
 }

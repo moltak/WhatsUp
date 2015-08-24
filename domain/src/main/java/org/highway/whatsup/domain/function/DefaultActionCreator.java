@@ -2,10 +2,10 @@ package org.highway.whatsup.domain.function;
 
 import org.highway.whatsup.data.physics.BoundsCalculator;
 import org.highway.whatsup.data.physics.SpeedMeter;
-import org.highway.whatsup.data.rest.KoExApiProvider;
-import org.highway.whatsup.data.rest.functions.KoExAccidentApi;
-import org.highway.whatsup.data.rest.functions.KoExCctvApi;
-import org.highway.whatsup.data.rest.functions.KoExEventApi;
+import org.highway.whatsup.data.rest.koex.KoExApiProvider;
+import org.highway.whatsup.data.rest.koex.functions.KoExAccidentApi;
+import org.highway.whatsup.data.rest.koex.functions.KoExCctvApi;
+import org.highway.whatsup.data.rest.koex.functions.KoExEventApi;
 import org.highway.whatsup.domain.data.ExpressData;
 
 import java.util.concurrent.ExecutionException;
@@ -21,7 +21,6 @@ public class DefaultActionCreator {
     private final BoundsCalculator boundsCalculator;
     private final SpeedMeter speedMeter;
     private final KoExApiProvider koExApiProvider;
-    private SpeedMeter.Progression speedProgression;
 
     public DefaultActionCreator(BoundsCalculator boundsCalculator, SpeedMeter speedMeter, KoExApiProvider koExApiProvider) {
         this.boundsCalculator = boundsCalculator;
@@ -30,25 +29,23 @@ public class DefaultActionCreator {
     }
 
     public SpeedMeter.Progression getProgression(float speed) {
-        speedProgression = speedMeter.getSpeedProgression(speed);
-        return speedProgression;
+        return speedMeter.getSpeedProgression(speed);
     }
 
-    public ExpressData getExpressWayData(double lat, double lng) {
-        if(speedProgression == SpeedMeter.Progression.HIGH_SPEED) {
-            return null;
-        }
-
+    public ExpressData getExpressWayData(
+            float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed) {
         try {
-            return retrieveExpressWayData(lat, lng);
+            return retrieveExpressWayData(speed, lat, lng, progressionSpeed);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        return new ExpressData("", "");
+        return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
     }
 
-    private ExpressData retrieveExpressWayData(double lat, double lng) throws ExecutionException, InterruptedException {
+    private ExpressData retrieveExpressWayData(
+            final float speed, final double lat, final double lng, final SpeedMeter.Progression progressionSpeed)
+            throws ExecutionException, InterruptedException {
         BoundsCalculator.Bounds bounds = boundsCalculator.getBounds(lat, lng);
         Observable<ExpressData> o = Observable.zip(
                 koExApiProvider.getAccidentApi(bounds),
@@ -61,21 +58,18 @@ public class DefaultActionCreator {
                         if (event.getData().get(0).getExpectedDetourMsg() != null) {
                             msg = event.getData().get(0).getExpectedDetourMsg();
                         }
-                        return new ExpressData(cctv.getDatas().get(0).getCCTVurl(), msg);
+                        return new ExpressData(speed, lat, lng, progressionSpeed, cctv.getDatas().get(0).getCCTVurl(), msg);
                     }
                 });
         return o.toBlocking().toFuture().get();
     }
 
-    public ExpressData doit(int speed, double lat, double lng) {
-        if(getProgression(speed) == SpeedMeter.Progression.HIGH_SPEED) {
-            return null;
+    public ExpressData doit(float speed, double lat, double lng) {
+        SpeedMeter.Progression progressionSpeed = getProgression(speed);
+        if(progressionSpeed == SpeedMeter.Progression.HIGH_SPEED) {
+            return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
         }
 
-        return getExpressWayData(lat, lng);
-    }
-
-    public SpeedMeter.Progression getSpeedProgression() {
-        return speedProgression;
+        return getExpressWayData(speed, lat, lng, progressionSpeed);
     }
 }

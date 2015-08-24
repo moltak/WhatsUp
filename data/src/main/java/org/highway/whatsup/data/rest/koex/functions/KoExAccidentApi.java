@@ -1,4 +1,4 @@
-package org.highway.whatsup.data.rest.functions;
+package org.highway.whatsup.data.rest.koex.functions;
 
 import org.highway.whatsup.data.entity.KoExAccidentEntity;
 import org.simpleframework.xml.Element;

@@ -1,8 +1,9 @@
-package org.highway.whatsup.data.rest.functions;
+package org.highway.whatsup.data.rest.koex.functions;
 
-import org.highway.whatsup.data.entity.KoExCctvEntity;
+import org.highway.whatsup.data.entity.KoExEventEntity;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +14,12 @@ import retrofit.http.QueryMap;
 import rx.Observable;
 
 /**
- * Created by engeng on 8/23/15.
+ * Created by engeng on 8/22/15.
  */
-public class KoExCctvApi {
+public class KoExEventApi {
 
     public interface Request {
-        @GET("/NCCTVInfo")
+        @GET("/NEventIdentity")
         Observable<Response> get(@QueryMap Map<String, Object> map);
     }
 
@@ -50,15 +51,16 @@ public class KoExCctvApi {
         }
     }
 
+    @Root(name = "response")
     public static class Response {
-        @Element(name = "CoordType")
-        private String CoordType;
+        @Element(name = "CoodType", type = String.class)
+        String CoordType;
 
-        @Element(name = "DataCount")
-        private int DataCount;
+        @Element(name = "DataCount", type = Integer.class)
+        int DataCount;
 
         @ElementList(name = "data")
-        private List<KoExCctvEntity> datas;
+        List<KoExEventEntity> data;
 
         public String getCoordType() {
             return CoordType;
@@ -68,8 +70,8 @@ public class KoExCctvApi {
             return DataCount;
         }
 
-        public List<KoExCctvEntity> getDatas() {
-            return datas;
+        public List<KoExEventEntity> getData() {
+            return data;
         }
     }
 }

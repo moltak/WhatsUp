@@ -1,15 +1,25 @@
 package org.highway.whatsup.domain.data;
 
+import org.highway.whatsup.data.physics.SpeedMeter;
+
 /**
  * Created by engeng on 8/23/15.
  */
 public class ExpressData {
 
-    private final String cctvUrl, msg;
+    private String cctvUrl, msg;
+    private float speed;
+    private double lat, lng;
+    private SpeedMeter.Progression progressionSpeed;
 
-    public ExpressData(String cctvUrl, String msg) {
+    public ExpressData(float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed,
+                       String cctvUrl, String msg) {
         this.cctvUrl = cctvUrl;
         this.msg = msg;
+        this.speed = speed;
+        this.lat = lat;
+        this.lng = lng;
+        this.progressionSpeed = progressionSpeed;
     }
 
     public String getCctvUrl() {
@@ -18,6 +28,22 @@ public class ExpressData {
 
     public String getMsg() {
         return msg;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public SpeedMeter.Progression getProgressionSpeed() {
+        return progressionSpeed;
     }
 
     /**

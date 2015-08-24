@@ -1,10 +1,10 @@
 package org.highway.whatsup.data.test;
 
 import org.highway.whatsup.data.constans.Keys;
-import org.highway.whatsup.data.rest.functions.KoExCctvApi;
-import org.highway.whatsup.data.rest.functions.KoExAccidentApi;
-import org.highway.whatsup.data.rest.adapter.KoExRestAdapter;
-import org.highway.whatsup.data.rest.functions.KoExEventApi;
+import org.highway.whatsup.data.rest.koex.functions.KoExCctvApi;
+import org.highway.whatsup.data.rest.koex.functions.KoExAccidentApi;
+import org.highway.whatsup.data.rest.koex.adapter.KoExRestAdapter;
+import org.highway.whatsup.data.rest.koex.functions.KoExEventApi;
 import org.junit.Before;
 import org.junit.Test;
 
