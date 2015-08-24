@@ -51,14 +51,14 @@ public class KoExCctvApi {
     }
 
     public static class Response {
-        @Element(name = "CoordType")
+        @Element(name = "coordtype", required = false)
         private String CoordType;
 
-        @Element(name = "DataCount")
+        @Element(name = "datacount", required = false)
         private int DataCount;
 
-        @ElementList(name = "data")
-        private List<KoExCctvEntity> datas;
+        @ElementList(name = "data", required = false)
+        private List<KoExCctvEntity> data;
 
         public String getCoordType() {
             return CoordType;
@@ -68,8 +68,8 @@ public class KoExCctvApi {
             return DataCount;
         }
 
-        public List<KoExCctvEntity> getDatas() {
-            return datas;
+        public List<KoExCctvEntity> getData() {
+            return data;
         }
     }
 }

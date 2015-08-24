@@ -51,16 +51,18 @@ public class KoExEventApi {
         }
     }
 
-    @Root(name = "response")
     public static class Response {
-        @Element(name = "CoodType", type = String.class)
+        @Element(name = "coordtype", type = String.class, required = false)
         String CoordType;
 
-        @Element(name = "DataCount", type = Integer.class)
+        @Element(name = "datacount", type = Integer.class, required = false)
         int DataCount;
 
-        @ElementList(name = "data")
+        @ElementList(name = "data", required = false)
         List<KoExEventEntity> data;
+
+        @Element(name = "response", required = false, type = String.class)
+        String Response;
 
         public String getCoordType() {
             return CoordType;
@@ -72,6 +74,10 @@ public class KoExEventApi {
 
         public List<KoExEventEntity> getData() {
             return data;
+        }
+
+        public String getResponse() {
+            return Response;
         }
     }
 }

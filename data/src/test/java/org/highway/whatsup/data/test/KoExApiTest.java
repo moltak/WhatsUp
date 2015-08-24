@@ -39,7 +39,6 @@ public class KoExApiTest {
         subscriber.assertNoErrors();
 
         KoExAccidentApi.Response r = (KoExAccidentApi.Response) subscriber.getOnNextEvents().get(0);
-        assertThat(r.getRs(), nullValue());
     }
 
     @Test

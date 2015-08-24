@@ -1,14 +1,12 @@
 package org.highway.whatsup.data.entity;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 /**
  * Created by engeng on 8/23/15.
  */
-@Root(name = "data")
 public class KoExCctvEntity {
-    @Element(name = "CCTVType")
+    @Element(name = "CCTVType", type = String.class)
     String CCTVType;
 
     @Element(name = "FileCreateTime")
