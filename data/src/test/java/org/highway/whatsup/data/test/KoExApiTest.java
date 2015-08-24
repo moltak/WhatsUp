@@ -1,16 +1,16 @@
 package org.highway.whatsup.data.test;
 
 import org.highway.whatsup.data.constans.Keys;
-import org.highway.whatsup.data.rest.koex.functions.KoExCctvApi;
-import org.highway.whatsup.data.rest.koex.functions.KoExAccidentApi;
 import org.highway.whatsup.data.rest.koex.adapter.KoExRestAdapter;
+import org.highway.whatsup.data.rest.koex.functions.KoExAccidentApi;
+import org.highway.whatsup.data.rest.koex.functions.KoExCctvApi;
 import org.highway.whatsup.data.rest.koex.functions.KoExEventApi;
 import org.junit.Before;
 import org.junit.Test;
 
 import rx.observers.TestSubscriber;
 
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -39,6 +39,7 @@ public class KoExApiTest {
         subscriber.assertNoErrors();
 
         KoExAccidentApi.Response r = (KoExAccidentApi.Response) subscriber.getOnNextEvents().get(0);
+        assertThat(r.getData().size(), not(0));
     }
 
     @Test
@@ -54,6 +55,9 @@ public class KoExApiTest {
 
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
+
+        KoExEventApi.Response r = (KoExEventApi.Response) subscriber.getOnNextEvents().get(0);
+        assertThat(r.getData().size(), not(0));
     }
 
     @Test
@@ -69,5 +73,8 @@ public class KoExApiTest {
 
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
+
+        KoExCctvApi.Response r = (KoExCctvApi.Response) subscriber.getOnNextEvents().get(0);
+        assertThat(r.getDatas().size(), not(0));
     }
 }

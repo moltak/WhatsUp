@@ -1,10 +1,13 @@
 package org.highway.whatsup.data.entity;
 
+import org.simpleframework.xml.Root;
+
 /**
  * Created by engeng on 8/23/15.
  */
+@Root(name = "data")
 public class KoExEventEntity {
-    String type, EventId, EventType, LanesBlockType, LanesBlocked, EventStartDay, EventEndDay,
+    String type, eventId, EventType, LanesBlockType, LanesBlocked, EventStartDay, EventEndDay,
             EventStartTime, EventEndTime, EventStatusMsg, ExpectedDetourMsg, EventDirection;
     double CoordX, CoordY;
     int ExpectedCnt;
@@ -14,7 +17,7 @@ public class KoExEventEntity {
     }
 
     public String getEventId() {
-        return EventId;
+        return eventId;
     }
 
     public String getEventType() {

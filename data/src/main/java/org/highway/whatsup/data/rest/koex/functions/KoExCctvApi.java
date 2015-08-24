@@ -2,7 +2,9 @@ package org.highway.whatsup.data.rest.koex.functions;
 
 import org.highway.whatsup.data.entity.KoExCctvEntity;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementArray;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,26 +52,27 @@ public class KoExCctvApi {
         }
     }
 
+    @Root(name = "response")
     public static class Response {
         @Element(name = "coordtype", required = false)
-        private String CoordType;
+        private String coordType;
 
         @Element(name = "datacount", required = false)
-        private int DataCount;
+        private int dataCount;
 
-        @ElementList(name = "data", required = false)
-        private List<KoExCctvEntity> data;
+        @ElementList(name = "data", inline = true, required = false)
+        private List<KoExCctvEntity> datas;
 
         public String getCoordType() {
-            return CoordType;
+            return coordType;
         }
 
         public int getDataCount() {
-            return DataCount;
+            return dataCount;
         }
 
-        public List<KoExCctvEntity> getData() {
-            return data;
+        public List<KoExCctvEntity> getDatas() {
+            return datas;
         }
     }
 }

@@ -1,64 +1,69 @@
 package org.highway.whatsup.data.entity;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * Created by engeng on 8/23/15.
  */
+@Root(name = "data")
 public class KoExCctvEntity {
-    @Element(name = "CCTVType", type = String.class)
-    String CCTVType;
+    @Element(name = "cctvtype", type = Integer.class, required = false)
+    Integer cctvType;
 
-    @Element(name = "FileCreateTime")
-    String FileCreateTime;
+    @Element(name = "filecreatetime", required = false)
+    String fileCreateTime;
 
-    @Element(name = "CCTVFormat")
-    String CCTVFormat;
+    @Element(name = "cctvformat", required = false)
+    String cctvFormat;
 
-    @Element(name = "RoadSectionId")
-    String RoadSectionId;
+    @Element(name = "roadsectionid", required = false)
+    String roadSectionId;
 
-    @Element(name = "CCTVName")
-    String CCTVName;
+    @Element(name = "cctvname", required = false)
+    String cctvName;
 
-    @Element(name = "CCTVurl")
-    String CCTVurl;
+    @Element(name = "cctvurl", required = false)
+    String cctvUrl;
 
-    @Element(name = "CoordX")
-    double CoordX;
+    @Element(name = "coordx", type = Double.class, required = false)
+    Double coordX;
 
-    @Element(name = "CooddY")
-    double CooddY;
+    @Element(name = "coordy", type = Double.class, required = false)
+    Double coordY;
 
-    public String getCCTVType() {
-        return CCTVType;
-    }
+    @Element(name = "cctvresolution", required = false)
+    String cctvResolution;
 
     public String getFileCreateTime() {
-        return FileCreateTime;
+        return fileCreateTime;
     }
 
-    public String getCCTVFormat() {
-        return CCTVFormat;
+    public Integer getCctvType() {
+        return cctvType;
+    }
+
+    public String getCctvFormat() {
+        return cctvFormat;
     }
 
     public String getRoadSectionId() {
-        return RoadSectionId;
+        return roadSectionId;
     }
 
-    public String getCCTVName() {
-        return CCTVName;
+    public String getCctvName() {
+        return cctvName;
     }
 
-    public String getCCTVurl() {
-        return CCTVurl;
+    public String getCctvUrl() {
+        return cctvUrl;
     }
 
     public double getCoordX() {
-        return CoordX;
+        return coordX;
     }
 
-    public double getCooddY() {
-        return CooddY;
+    public double getCoordY() {
+        return coordY;
     }
 }

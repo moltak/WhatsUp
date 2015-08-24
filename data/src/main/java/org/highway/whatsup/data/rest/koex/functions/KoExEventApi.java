@@ -58,7 +58,7 @@ public class KoExEventApi {
         @Element(name = "datacount", type = Integer.class, required = false)
         int DataCount;
 
-        @ElementList(name = "data", required = false)
+        @ElementList(name = "data", inline = true, required = false)
         List<KoExEventEntity> data;
 
         @Element(name = "response", required = false, type = String.class)

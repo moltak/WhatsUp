@@ -59,7 +59,7 @@ public class KoExAccidentApi {
         @Element(name = "datacount", required = false)
         int dataCount;
 
-        @ElementList(name = "data", required = false)
+        @ElementList(name = "data", inline = true, required = false)
         List<KoExAccidentEntity> data;
 
         @Element(name = "response", required = false, type = String.class)

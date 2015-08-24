@@ -1,8 +1,11 @@
 package org.highway.whatsup.data.entity;
 
+import org.simpleframework.xml.Root;
+
 /**
  * Created by engeng on 8/22/15.
  */
+@Root(name = "data")
 public class KoExAccidentEntity {
     String type,IncidentType, LanesBlockType, IncidentMsg, IncidentDuration,
             ExpectedDetourMsg, EventDirection;
