@@ -58,7 +58,7 @@ public class DefaultActionCreator {
                         if (event.getData().get(0).getExpectedDetourMsg() != null) {
                             msg = event.getData().get(0).getExpectedDetourMsg();
                         }
-                        return new ExpressData(speed, lat, lng, progressionSpeed, cctv.getData().get(0).getCCTVurl(), msg);
+                        return new ExpressData(speed, lat, lng, progressionSpeed, cctv.getDatas().get(0).getCctvUrl(), msg);
                     }
                 });
         return o.toBlocking().toFuture().get();

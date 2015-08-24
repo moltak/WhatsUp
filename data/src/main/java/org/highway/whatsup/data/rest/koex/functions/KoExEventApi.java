@@ -61,7 +61,7 @@ public class KoExEventApi {
         @ElementList(name = "data", inline = true, required = false)
         List<KoExEventEntity> data;
 
-        @Element(name = "response", required = false, type = String.class)
+        @Element(name = "response", required = false)
         String Response;
 
         public String getCoordType() {

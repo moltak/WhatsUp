@@ -1,5 +1,6 @@
 package org.highway.whatsup.data.entity;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
@@ -7,48 +8,74 @@ import org.simpleframework.xml.Root;
  */
 @Root(name = "data")
 public class KoExAccidentEntity {
-    String type,IncidentType, LanesBlockType, IncidentMsg, IncidentDuration,
-            ExpectedDetourMsg, EventDirection;
-    int ExpectedCnt;
-    double CoordX, CoordY;
+
+    @Element(name = "type", required = false)
+    String type;
+
+    @Element(name = "incidenttype", required = false)
+    String incidentType;
+
+    @Element(name = "lanesblocktype", required = false)
+    String lanesBlockType;
+
+    @Element(name = "incidentmsg", required = false)
+    String incidentMsg;
+
+    @Element(name = "incidentduration", required = false)
+    String incidentDuration;
+
+    @Element(name = "expecteddetourmsg", required = false)
+    String expectedDetourMsg;
+
+    @Element(name = "eventdirection", required = false)
+    String eventDirection;
+
+    @Element(name = "expectedcnt", required = false)
+    int expectedCnt;
+
+    @Element(name = "coordx", required = false)
+    double coordX;
+
+    @Element(name = "coordy", required = false)
+    double coordY;
 
     public String getType() {
         return type;
     }
 
     public String getIncidentType() {
-        return IncidentType;
+        return incidentType;
     }
 
     public String getLanesBlockType() {
-        return LanesBlockType;
+        return lanesBlockType;
     }
 
     public String getIncidentMsg() {
-        return IncidentMsg;
+        return incidentMsg;
     }
 
     public String getIncidentDuration() {
-        return IncidentDuration;
+        return incidentDuration;
     }
 
     public String getExpectedDetourMsg() {
-        return ExpectedDetourMsg;
+        return expectedDetourMsg;
     }
 
     public String getEventDirection() {
-        return EventDirection;
+        return eventDirection;
     }
 
     public int getExpectedCnt() {
-        return ExpectedCnt;
+        return expectedCnt;
     }
 
     public double getCoordX() {
-        return CoordX;
+        return coordX;
     }
 
     public double getCoordY() {
-        return CoordY;
+        return coordY;
     }
 }

@@ -1,5 +1,6 @@
 package org.highway.whatsup.data.entity;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
@@ -7,10 +8,51 @@ import org.simpleframework.xml.Root;
  */
 @Root(name = "data")
 public class KoExEventEntity {
-    String type, eventId, EventType, LanesBlockType, LanesBlocked, EventStartDay, EventEndDay,
-            EventStartTime, EventEndTime, EventStatusMsg, ExpectedDetourMsg, EventDirection;
-    double CoordX, CoordY;
-    int ExpectedCnt;
+
+    @Element(name = "type", required = false)
+    String type;
+
+    @Element(name = "eventid", required = false)
+    String eventId;
+
+    @Element(name = "eventtype", required = false)
+    String eventType;
+
+    @Element(name = "lanesblocktype", required = false)
+    String lanesBlockType;
+
+    @Element(name = "lanesblocked", required = false)
+    String lanesBlocked;
+
+    @Element(name = "eventstartday", required = false)
+    String eventStartDay;
+
+    @Element(name = "eventendday", required = false)
+    String eventEndDay;
+
+    @Element(name = "eventstarttime", required = false)
+    String eventStartTime;
+
+    @Element(name = "eventendtime", required = false)
+    String eventEndTime;
+
+    @Element(name = "eventstatusmsg", required = false)
+    String eventStatusMsg;
+
+    @Element(name = "expecteddetourmsg", required = false)
+    String expectedDetourMsg;
+
+    @Element(name = "eventdirection", required = false)
+    String eventDirection;
+
+    @Element(name = "coordx", required = false)
+    double coordX;
+
+    @Element(name = "coordy", required = false)
+    double coordY;
+
+    @Element(name = "expectedcnt", required = false)
+    int expectedCnt;
 
     public String getType() {
         return type;
@@ -21,54 +63,54 @@ public class KoExEventEntity {
     }
 
     public String getEventType() {
-        return EventType;
+        return eventType;
     }
 
     public String getLanesBlockType() {
-        return LanesBlockType;
+        return lanesBlockType;
     }
 
     public String getLanesBlocked() {
-        return LanesBlocked;
+        return lanesBlocked;
     }
 
     public String getEventStartDay() {
-        return EventStartDay;
+        return eventStartDay;
     }
 
     public String getEventEndDay() {
-        return EventEndDay;
+        return eventEndDay;
     }
 
     public String getEventStartTime() {
-        return EventStartTime;
+        return eventStartTime;
     }
 
     public String getEventEndTime() {
-        return EventEndTime;
+        return eventEndTime;
     }
 
     public String getEventStatusMsg() {
-        return EventStatusMsg;
+        return eventStatusMsg;
     }
 
     public String getExpectedDetourMsg() {
-        return ExpectedDetourMsg;
+        return expectedDetourMsg;
     }
 
     public String getEventDirection() {
-        return EventDirection;
+        return eventDirection;
     }
 
     public double getCoordX() {
-        return CoordX;
+        return coordX;
     }
 
     public double getCoordY() {
-        return CoordY;
+        return coordY;
     }
 
     public int getExpectedCnt() {
-        return ExpectedCnt;
+        return expectedCnt;
     }
 }
