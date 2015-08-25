@@ -1,4 +1,4 @@
-package org.highway.whatsup.data.entity;
+package org.highway.whatsup.data.entity.koex;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

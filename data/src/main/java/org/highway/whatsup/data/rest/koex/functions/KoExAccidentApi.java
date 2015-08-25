@@ -1,6 +1,6 @@
 package org.highway.whatsup.data.rest.koex.functions;
 
-import org.highway.whatsup.data.entity.KoExAccidentEntity;
+import org.highway.whatsup.data.entity.koex.KoExAccidentEntity;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
