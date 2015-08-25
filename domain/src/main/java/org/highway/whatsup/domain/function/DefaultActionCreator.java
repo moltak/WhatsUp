@@ -54,11 +54,17 @@ public class DefaultActionCreator {
                 new Func3<KoExAccidentApi.Response, KoExEventApi.Response, KoExCctvApi.Response, ExpressData>() {
                     @Override
                     public ExpressData call(KoExAccidentApi.Response accident, KoExEventApi.Response event, KoExCctvApi.Response cctv) {
-                        String msg = accident.getData().get(0).getExpectedDetourMsg();
-                        if (event.getData().get(0).getExpectedDetourMsg() != null) {
+                        String msg = "", cctvUrl = "";
+                        if (accident.getDataCount() != 0) {
+                            msg = accident.getData().get(0).getExpectedDetourMsg();
+                        }
+                        if (event.getDataCount() != 0) {
                             msg = event.getData().get(0).getExpectedDetourMsg();
                         }
-                        return new ExpressData(speed, lat, lng, progressionSpeed, cctv.getDatas().get(0).getCctvUrl(), msg);
+                        if (cctv.getDataCount() != 0) {
+                            cctvUrl = cctv.getDatas().get(0).getCctvUrl();
+                        }
+                        return new ExpressData(speed, lat, lng, progressionSpeed, cctvUrl, msg);
                     }
                 });
         return o.toBlocking().toFuture().get();

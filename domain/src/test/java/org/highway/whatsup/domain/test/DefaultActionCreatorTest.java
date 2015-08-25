@@ -68,8 +68,7 @@ public class DefaultActionCreatorTest {
 
         ExpressData expressData = actionCreator.getExpressWayData(2, lat, lng, progressionSpeed);
         assertThat(expressData, notNullValue());
-
-        assertThat(expressData.getCctvUrl(), not(""));
-        assertThat(expressData.getMsg(), not(""));
+        assertThat(expressData.getCctvUrl(), notNullValue());
+        assertThat(expressData.getMsg(), notNullValue());
     }
 }
