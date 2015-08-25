@@ -57,7 +57,8 @@ public class DefaultActionCreatorTest {
         assertThat(progressionSpeed, is(SpeedMeter.Progression.HIGH_SPEED));
 
         ExpressData expressData = actionCreator.getExpressWayData(30, lat, lng, progressionSpeed);
-        assertThat(expressData, nullValue());
+        assertThat(expressData, notNullValue());
+        assertThat(expressData.getSpeed(), is(30f));
     }
 
     @Test
