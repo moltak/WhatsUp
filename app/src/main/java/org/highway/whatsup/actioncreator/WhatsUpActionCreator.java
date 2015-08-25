@@ -4,7 +4,7 @@ import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.data.entity.whatsup.WhatsupResultEntity;
-import org.highway.whatsup.data.mobileinfo.UuidGenerator;
+import org.highway.whatsup.data.uuid.HashedUuidGenerator;
 import org.highway.whatsup.data.physics.DefaultExpressWayGeolocation;
 import org.highway.whatsup.data.physics.ExpressWayGeolocation;
 import org.highway.whatsup.data.physics.SpeedMeter;
@@ -13,6 +13,8 @@ import org.highway.whatsup.data.rest.whatsup.functions.WhatsupApi;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.data.ExpressData;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -33,7 +35,7 @@ public class WhatsUpActionCreator {
         this.whatsUpApiProvider = whatsUpApiProvider;
         this.defaultActionCreator = defaultActionCreator;
         this.expressWayGeolocation = expressWayGeolocation;
-        this.uuid = UuidGenerator.gen(context);
+        this.uuid = HashedUuidGenerator.gen(context);
     }
 
     public DefaultActionCreator getDefaultActionCreator() {
