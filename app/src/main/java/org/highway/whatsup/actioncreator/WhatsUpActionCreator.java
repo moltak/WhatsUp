@@ -4,17 +4,15 @@ import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.data.entity.whatsup.WhatsupResultEntity;
-import org.highway.whatsup.data.uuid.HashedUuidGenerator;
 import org.highway.whatsup.data.physics.DefaultExpressWayGeolocation;
 import org.highway.whatsup.data.physics.ExpressWayGeolocation;
 import org.highway.whatsup.data.physics.SpeedMeter;
 import org.highway.whatsup.data.rest.whatsup.WhatsUpApiProvider;
 import org.highway.whatsup.data.rest.whatsup.functions.WhatsupApi;
+import org.highway.whatsup.data.uuid.HashedUuidGenerator;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.data.ExpressData;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -27,6 +25,11 @@ public class WhatsUpActionCreator {
     final DefaultActionCreator defaultActionCreator;
     final ExpressWayGeolocation expressWayGeolocation;
     final String uuid;
+    Behavior behavior;
+
+    public enum Behavior {
+        PRINT, NOTHING
+    }
 
     @Inject public WhatsUpActionCreator(Context context,
                                         WhatsUpApiProvider whatsUpApiProvider,
@@ -36,27 +39,25 @@ public class WhatsUpActionCreator {
         this.defaultActionCreator = defaultActionCreator;
         this.expressWayGeolocation = expressWayGeolocation;
         this.uuid = HashedUuidGenerator.gen(context);
-    }
-
-    public DefaultActionCreator getDefaultActionCreator() {
-        return defaultActionCreator;
-    }
-
-    public WhatsUpApiProvider getWhatsUpApiProvider() {
-        return whatsUpApiProvider;
+        this.behavior = Behavior.NOTHING;
     }
 
     public ExpressData doit(Location location, float speed, double lat, double lng)
             throws ExecutionException, InterruptedException {
+        behavior = Behavior.NOTHING;
         ExpressData data = retrieveWhatsUpData(location, speed, lat, lng);
         if(data.getMsg() == null) { // 서버에 메시지가 없음. -> 속도 체크해서 한국도로공사에서 정보를 가져와야함
             data = defaultActionCreator.doit(speed, lat, lng);
             if (data.getProgressionSpeed() == SpeedMeter.Progression.LOW_SPEED) { // 속도가 느리면 화면 출력.
-                // 화면 출력
+                behavior = Behavior.PRINT;
             }
             sendExpressProgressionData(data, location);
         }
         return data;
+    }
+
+    public Behavior getBehavior() {
+        return behavior;
     }
 
     /**

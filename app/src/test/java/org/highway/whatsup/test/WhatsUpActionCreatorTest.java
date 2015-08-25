@@ -10,6 +10,7 @@ import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.di.component.WhatsUpComponent;
 import org.highway.whatsup.di.module.ApplicationModule;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
+import org.highway.whatsup.domain.data.ExpressData;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
@@ -20,7 +21,9 @@ import org.junit.Test;
 
 import java.util.concurrent.ExecutionException;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -58,19 +61,28 @@ public class WhatsUpActionCreatorTest {
     }
 
     @Test
-    public void shouldHasWhatsupApiModule() {
-        WhatsUpActionCreator whatsUpActionCreator = component.whatsUpActionCreator();
-        assertThat(whatsUpActionCreator, notNullValue());
-        assertThat(whatsUpActionCreator.getDefaultActionCreator(), notNullValue());
-        assertThat(whatsUpActionCreator.getWhatsUpApiProvider(), notNullValue());
-    }
-
-    @Test
-    public void testWhasupActionCreatorDoit() {
+    public void shouldReturnMsgNullBehaviorNOTHING() {
         try {
             Location mockLocation = mock(Location.class);
             when(mockLocation.getBearing()).thenReturn(30f);
-            component.whatsUpActionCreator().doit(mockLocation, 3, lat, lng);
+            WhatsUpActionCreator creator = component.whatsUpActionCreator();
+            ExpressData data = creator.doit(mockLocation, 3, lat, lng);
+            assertThat(creator.getBehavior(), is(WhatsUpActionCreator.Behavior.NOTHING));
+            assertThat(data.getMsg(), nullValue());
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void shouldReturnBehaviorPrint() {
+        try {
+            Location mockLocation = mock(Location.class);
+            when(mockLocation.getBearing()).thenReturn(30f);
+            WhatsUpActionCreator creator = component.whatsUpActionCreator();
+            ExpressData data = creator.doit(mockLocation, 1, lat, lng);
+            assertThat(creator.getBehavior(), is(WhatsUpActionCreator.Behavior.PRINT));
+            assertThat(data.getMsg(), notNullValue());
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
