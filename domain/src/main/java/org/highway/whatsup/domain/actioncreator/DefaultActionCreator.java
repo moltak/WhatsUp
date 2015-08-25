@@ -28,6 +28,18 @@ public class DefaultActionCreator {
         this.koExApiProvider = koExApiProvider;
     }
 
+    /**
+     * @param speed m/s -> speed 가 3이상이면 HIGH_PROGRESSION
+     */
+    public ExpressData doit(float speed, double lat, double lng) {
+        SpeedMeter.Progression progressionSpeed = getProgression(speed);
+        if(progressionSpeed == SpeedMeter.Progression.HIGH_SPEED) {
+            return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
+        }
+
+        return getExpressWayData(speed, lat, lng, progressionSpeed);
+    }
+
     public SpeedMeter.Progression getProgression(float speed) {
         return speedMeter.getSpeedProgression(speed);
     }
@@ -68,14 +80,5 @@ public class DefaultActionCreator {
                     }
                 });
         return o.toBlocking().toFuture().get();
-    }
-
-    public ExpressData doit(float speed, double lat, double lng) {
-        SpeedMeter.Progression progressionSpeed = getProgression(speed);
-        if(progressionSpeed == SpeedMeter.Progression.HIGH_SPEED) {
-            return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
-        }
-
-        return getExpressWayData(speed, lat, lng, progressionSpeed);
     }
 }

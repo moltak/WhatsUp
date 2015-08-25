@@ -42,6 +42,9 @@ public class WhatsUpActionCreator {
         this.behavior = Behavior.NOTHING;
     }
 
+    /**
+     * @param speed m/s -> speed 가 3이상이면 HIGH_PROGRESSION
+     */
     public ExpressData doit(Location location, float speed, double lat, double lng)
             throws ExecutionException, InterruptedException {
         behavior = Behavior.NOTHING;
