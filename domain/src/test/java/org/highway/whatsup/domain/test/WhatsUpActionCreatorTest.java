@@ -1,6 +1,5 @@
 package org.highway.whatsup.domain.test;
 
-import org.highway.whatsup.domain.data.ExpressData;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
@@ -17,7 +16,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 /**

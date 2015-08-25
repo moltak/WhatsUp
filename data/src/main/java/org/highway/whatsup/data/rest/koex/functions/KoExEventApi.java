@@ -1,9 +1,8 @@
 package org.highway.whatsup.data.rest.koex.functions;
 
-import org.highway.whatsup.data.entity.KoExEventEntity;
+import org.highway.whatsup.data.entity.koex.KoExEventEntity;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
 
 import java.util.HashMap;
 import java.util.List;

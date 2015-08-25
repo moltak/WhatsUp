@@ -3,7 +3,7 @@ package org.highway.whatsup.data.test;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
-import org.highway.whatsup.data.entity.KoExCctvEntity;
+import org.highway.whatsup.data.entity.koex.KoExCctvEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.simpleframework.xml.Element;
