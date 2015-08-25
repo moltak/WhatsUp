@@ -1,4 +1,4 @@
-package org.highway.whatsup.data.rest.koex.adapter;
+package org.highway.whatsup.data.rest;
 
 import com.squareup.okhttp.OkHttpClient;
 
