@@ -1,5 +1,7 @@
 package org.highway.whatsup.test;
 
+import android.location.Location;
+
 import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
 import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.di.component.WhatsUpComponent;
@@ -12,8 +14,12 @@ import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by engeng on 8/23/15.
@@ -47,5 +53,16 @@ public class WhatsUpActionCreatorTest {
         assertThat(whatsUpActionCreator, notNullValue());
         assertThat(whatsUpActionCreator.getDefaultActionCreator(), notNullValue());
         assertThat(whatsUpActionCreator.getWhatsUpApiProvider(), notNullValue());
+    }
+
+    @Test
+    public void testWhasupActionCreatorDoit() {
+        try {
+            Location mockLocation = mock(Location.class);
+            when(mockLocation.getBearing()).thenReturn(30f);
+            component.whatsUpActionCreator().doit(mockLocation, 3, lat, lng);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

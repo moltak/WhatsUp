@@ -70,7 +70,7 @@ public class WhatsUpActionCreator {
                 lat,
                 lng,
                 speed,
-                0,
+                0, // 순간 가속도를 어떻게 알아내는지 잘 모름.
                 location.getBearing());
         WhatsupResultEntity r = whatsUpApiProvider.getWhatsupApi(params).toBlocking().toFuture().get();
         String msg = null;
@@ -98,7 +98,7 @@ public class WhatsUpActionCreator {
                 data.getLat(),
                 data.getLng(),
                 data.getSpeed(),
-                0,
+                0, // 순간 가속도를 어떻게 알아내는지 잘 모름.
                 location.getBearing());
         WhatsupResultEntity r = whatsUpApiProvider.getStatics(params).toBlocking().toFuture().get();
         // return 체크 안함.
