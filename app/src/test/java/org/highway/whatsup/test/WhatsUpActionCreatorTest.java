@@ -2,21 +2,18 @@ package org.highway.whatsup.test;
 
 import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
 import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
+import org.highway.whatsup.di.component.WhatsUpComponent;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
-import org.highway.whatsup.di.component.WhatsUpComponent;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
-import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.only;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by engeng on 8/23/15.
@@ -50,12 +47,5 @@ public class WhatsUpActionCreatorTest {
         assertThat(whatsUpActionCreator, notNullValue());
         assertThat(whatsUpActionCreator.getDefaultActionCreator(), notNullValue());
         assertThat(whatsUpActionCreator.getWhatsUpApiProvider(), notNullValue());
-    }
-
-    @Test
-    public void shouldReturnExpressData() {
-        WhatsUpActionCreator whatsUpActionCreator = mock(WhatsUpActionCreator.class);
-        whatsUpActionCreator.retrieveWhatsUpData(3, lat, lng);
-        verify(whatsUpActionCreator, only()).retrieveWhatsUpData(3, lat, lng);
     }
 }
