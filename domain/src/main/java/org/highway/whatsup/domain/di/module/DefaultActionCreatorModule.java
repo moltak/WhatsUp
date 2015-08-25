@@ -3,7 +3,7 @@ package org.highway.whatsup.domain.di.module;
 import org.highway.whatsup.data.physics.DefaultBoundsCalculator;
 import org.highway.whatsup.data.physics.DefaultSpeedMeter;
 import org.highway.whatsup.data.rest.koex.KoExApiProvider;
-import org.highway.whatsup.domain.function.DefaultActionCreator;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 
 import dagger.Module;
 import dagger.Provides;

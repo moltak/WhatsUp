@@ -1,4 +1,4 @@
-package org.highway.whatsup.domain.function;
+package org.highway.whatsup.domain.actioncreator;
 
 import org.highway.whatsup.data.physics.BoundsCalculator;
 import org.highway.whatsup.data.physics.SpeedMeter;

@@ -1,7 +1,8 @@
-package org.highway.whatsup.domain.di.component;
+package org.highway.whatsup.di.component;
 
-import org.highway.whatsup.domain.function.DefaultActionCreator;
-import org.highway.whatsup.domain.function.WhatsUpActionCreator;
+import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
+import org.highway.whatsup.domain.di.component.DefaultComponent;
 
 import dagger.Component;
 

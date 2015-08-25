@@ -1,14 +1,14 @@
-package org.highway.whatsup.domain.test;
+package org.highway.whatsup.test;
 
+import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
+import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
-import org.highway.whatsup.domain.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
-import org.highway.whatsup.domain.di.component.WhatsUpComponent;
+import org.highway.whatsup.di.component.WhatsUpComponent;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
-import org.highway.whatsup.domain.function.DefaultActionCreator;
-import org.highway.whatsup.domain.function.WhatsUpActionCreator;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.junit.Before;
 import org.junit.Test;
 

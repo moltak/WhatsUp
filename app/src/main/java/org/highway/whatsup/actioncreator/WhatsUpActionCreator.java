@@ -1,6 +1,7 @@
-package org.highway.whatsup.domain.function;
+package org.highway.whatsup.actioncreator;
 
 import org.highway.whatsup.data.rest.whatsup.WhatsUpApiProvider;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.data.ExpressData;
 
 import javax.inject.Inject;

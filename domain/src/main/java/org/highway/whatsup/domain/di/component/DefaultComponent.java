@@ -6,7 +6,7 @@ import org.highway.whatsup.data.rest.koex.KoExApiProvider;
 import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
-import org.highway.whatsup.domain.function.DefaultActionCreator;
+import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 
 import dagger.Component;
 
