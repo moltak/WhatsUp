@@ -8,14 +8,14 @@ import javax.inject.Inject;
  * Created by engeng on 8/24/15.
  * todo: mock 데이터를 들고있음.
  */
-public class ExpressWayGeolocationImpl implements ExpressWayGeolocation {
+public class DefaultExpressWayGeolocation implements ExpressWayGeolocation {
 
     private Location location;
     private String nodeName;
     private boolean upLine;
     private int posOnNode;
 
-    @Inject public ExpressWayGeolocationImpl() {}
+    @Inject public DefaultExpressWayGeolocation() {}
 
     @Override
     public String nodeName() {

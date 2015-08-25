@@ -1,11 +1,12 @@
 package org.highway.whatsup.actioncreator;
 
+import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.data.entity.whatsup.WhatsupResultEntity;
-import org.highway.whatsup.data.mobileinfo.fakeUuidGenerator;
+import org.highway.whatsup.data.mobileinfo.UuidGenerator;
+import org.highway.whatsup.data.physics.DefaultExpressWayGeolocation;
 import org.highway.whatsup.data.physics.ExpressWayGeolocation;
-import org.highway.whatsup.data.physics.ExpressWayGeolocationImpl;
 import org.highway.whatsup.data.physics.SpeedMeter;
 import org.highway.whatsup.data.rest.whatsup.WhatsUpApiProvider;
 import org.highway.whatsup.data.rest.whatsup.functions.WhatsupApi;
@@ -23,13 +24,16 @@ public class WhatsUpActionCreator {
     final WhatsUpApiProvider whatsUpApiProvider;
     final DefaultActionCreator defaultActionCreator;
     final ExpressWayGeolocation expressWayGeolocation;
+    final String uuid;
 
-    @Inject public WhatsUpActionCreator(WhatsUpApiProvider whatsUpApiProvider,
+    @Inject public WhatsUpActionCreator(Context context,
+                                        WhatsUpApiProvider whatsUpApiProvider,
                                         DefaultActionCreator defaultActionCreator,
-                                        ExpressWayGeolocationImpl expressWayGeolocation) {
+                                        DefaultExpressWayGeolocation expressWayGeolocation) {
         this.whatsUpApiProvider = whatsUpApiProvider;
         this.defaultActionCreator = defaultActionCreator;
         this.expressWayGeolocation = expressWayGeolocation;
+        this.uuid = UuidGenerator.gen(context);
     }
 
     public DefaultActionCreator getDefaultActionCreator() {
@@ -66,8 +70,9 @@ public class WhatsUpActionCreator {
     private ExpressData retrieveWhatsUpData(Location location, float speed, double lat, double lng)
             throws ExecutionException, InterruptedException {
         expressWayGeolocation.setLocation(location);
+        expressWayGeolocation.figureOutGeolocation();
         WhatsupApi.Params params = new WhatsupApi.Params(
-                fakeUuidGenerator.gen(null),
+                uuid,
                 expressWayGeolocation.nodeName(),
                 expressWayGeolocation.upLine(),
                 expressWayGeolocation.posOnNode(),
@@ -94,8 +99,9 @@ public class WhatsUpActionCreator {
     private void sendExpressProgressionData(ExpressData data, Location location)
             throws ExecutionException, InterruptedException {
         expressWayGeolocation.setLocation(location);
+        expressWayGeolocation.figureOutGeolocation();
         WhatsupApi.Params params = new WhatsupApi.Params(
-                fakeUuidGenerator.gen(null),
+                uuid,
                 expressWayGeolocation.nodeName(),
                 expressWayGeolocation.upLine(),
                 expressWayGeolocation.posOnNode(),
