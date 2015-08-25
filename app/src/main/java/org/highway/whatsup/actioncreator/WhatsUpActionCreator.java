@@ -1,10 +1,12 @@
 package org.highway.whatsup.actioncreator;
 
+import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.data.entity.whatsup.WhatsupResultEntity;
-import org.highway.whatsup.data.mobileinfo.fakeUuidGenerator;
-import org.highway.whatsup.data.physics.fakeGeolocationForExpressWay;
+import org.highway.whatsup.data.mobileinfo.UuidGenerator;
+import org.highway.whatsup.data.physics.DefaultExpressWayGeolocation;
+import org.highway.whatsup.data.physics.ExpressWayGeolocation;
 import org.highway.whatsup.data.physics.SpeedMeter;
 import org.highway.whatsup.data.rest.whatsup.WhatsUpApiProvider;
 import org.highway.whatsup.data.rest.whatsup.functions.WhatsupApi;
@@ -21,11 +23,17 @@ import javax.inject.Inject;
 public class WhatsUpActionCreator {
     final WhatsUpApiProvider whatsUpApiProvider;
     final DefaultActionCreator defaultActionCreator;
+    final ExpressWayGeolocation expressWayGeolocation;
+    final String uuid;
 
-    @Inject public WhatsUpActionCreator(WhatsUpApiProvider whatsUpApiProvider,
-                                        DefaultActionCreator defaultActionCreator) {
+    @Inject public WhatsUpActionCreator(Context context,
+                                        WhatsUpApiProvider whatsUpApiProvider,
+                                        DefaultActionCreator defaultActionCreator,
+                                        DefaultExpressWayGeolocation expressWayGeolocation) {
         this.whatsUpApiProvider = whatsUpApiProvider;
         this.defaultActionCreator = defaultActionCreator;
+        this.expressWayGeolocation = expressWayGeolocation;
+        this.uuid = UuidGenerator.gen(context);
     }
 
     public DefaultActionCreator getDefaultActionCreator() {
@@ -44,7 +52,7 @@ public class WhatsUpActionCreator {
             if (data.getProgressionSpeed() == SpeedMeter.Progression.LOW_SPEED) { // 속도가 느리면 화면 출력.
                 // 화면 출력
             }
-            sendHighSpeedProgressionData(data, location);
+            sendExpressProgressionData(data, location);
         }
         return data;
     }
@@ -61,12 +69,13 @@ public class WhatsUpActionCreator {
      */
     private ExpressData retrieveWhatsUpData(Location location, float speed, double lat, double lng)
             throws ExecutionException, InterruptedException {
-        fakeGeolocationForExpressWay fakeGeolocationForExpressWay = new fakeGeolocationForExpressWay(location);
+        expressWayGeolocation.setLocation(location);
+        expressWayGeolocation.figureOutGeolocation();
         WhatsupApi.Params params = new WhatsupApi.Params(
-                fakeUuidGenerator.gen(null),
-                fakeGeolocationForExpressWay.nodeName(),
-                fakeGeolocationForExpressWay.upLine(),
-                fakeGeolocationForExpressWay.posOnNode(),
+                uuid,
+                expressWayGeolocation.nodeName(),
+                expressWayGeolocation.upLine(),
+                expressWayGeolocation.posOnNode(),
                 lat,
                 lng,
                 speed,
@@ -87,14 +96,15 @@ public class WhatsUpActionCreator {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private void sendHighSpeedProgressionData(ExpressData data, Location location)
+    private void sendExpressProgressionData(ExpressData data, Location location)
             throws ExecutionException, InterruptedException {
-        fakeGeolocationForExpressWay fakeGeolocationForExpressWay = new fakeGeolocationForExpressWay(location);
+        expressWayGeolocation.setLocation(location);
+        expressWayGeolocation.figureOutGeolocation();
         WhatsupApi.Params params = new WhatsupApi.Params(
-                fakeUuidGenerator.gen(null),
-                fakeGeolocationForExpressWay.nodeName(),
-                fakeGeolocationForExpressWay.upLine(),
-                fakeGeolocationForExpressWay.posOnNode(),
+                uuid,
+                expressWayGeolocation.nodeName(),
+                expressWayGeolocation.upLine(),
+                expressWayGeolocation.posOnNode(),
                 data.getLat(),
                 data.getLng(),
                 data.getSpeed(),

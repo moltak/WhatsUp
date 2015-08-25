@@ -16,7 +16,7 @@ import dagger.Provides;
 public class ApplicationModule {
     private final Context applicationContext;
 
-    public ApplicationModule(WhatsupApplication applicationContext) {
+    public ApplicationModule(Context applicationContext) {
         this.applicationContext = applicationContext;
     }
 

@@ -1,10 +1,14 @@
 package org.highway.whatsup.test;
 
+import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
+import org.highway.whatsup.di.component.ApplicationComponent;
+import org.highway.whatsup.di.component.DaggerApplicationComponent;
 import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.di.component.WhatsUpComponent;
+import org.highway.whatsup.di.module.ApplicationModule;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
@@ -36,8 +40,14 @@ public class WhatsUpActionCreatorTest {
                 .speedMeterModule(new SpeedMeterModule())
                 .defaultActionCreatorModule(new DefaultActionCreatorModule())
                 .build();
+        Context mockAppilicationContext = mock(Context.class);
+        when(mockAppilicationContext.getApplicationInfo()).thenReturn(null);
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(mockAppilicationContext))
+                .build();
         component = DaggerWhatsUpComponent.builder()
                 .defaultComponent(defaultComponent)
+                .applicationComponent(applicationComponent)
                 .build();
     }
 
