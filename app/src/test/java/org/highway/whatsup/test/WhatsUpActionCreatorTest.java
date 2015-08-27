@@ -4,11 +4,11 @@ import android.content.Context;
 import android.location.Location;
 
 import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
-import org.highway.whatsup.di.component.ApplicationComponent;
-import org.highway.whatsup.di.component.DaggerApplicationComponent;
+import org.highway.whatsup.di.component.ServiceComponent;
+import org.highway.whatsup.di.component.DaggerServiceComponent;
 import org.highway.whatsup.di.component.DaggerWhatsUpComponent;
 import org.highway.whatsup.di.component.WhatsUpComponent;
-import org.highway.whatsup.di.module.ApplicationModule;
+import org.highway.whatsup.di.module.ServiceModule;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.data.ExpressData;
 import org.highway.whatsup.domain.di.component.DaggerDefaultComponent;
@@ -45,19 +45,13 @@ public class WhatsUpActionCreatorTest {
                 .build();
         Context mockAppilicationContext = mock(Context.class);
         when(mockAppilicationContext.getApplicationInfo()).thenReturn(null);
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(mockAppilicationContext))
+        ServiceComponent serviceComponent = DaggerServiceComponent.builder()
+                .serviceModule(new ServiceModule(mockAppilicationContext))
                 .build();
         component = DaggerWhatsUpComponent.builder()
                 .defaultComponent(defaultComponent)
-                .applicationComponent(applicationComponent)
+                .serviceComponent(serviceComponent)
                 .build();
-    }
-
-    @Test
-    public void shouldHasDefaultActionCreator() {
-        DefaultActionCreator actionCreator = component.defaultActionCreator();
-        assertThat(actionCreator, notNullValue());
     }
 
     @Test
