@@ -24,6 +24,7 @@ import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.highway.whatsup.location.LocationController;
+import org.highway.whatsup.ui.activity.AlertActivity;
 import org.highway.whatsup.ui.activity.MainActivity;
 
 import java.util.concurrent.ExecutionException;
@@ -89,7 +90,7 @@ public class MainService extends Service {
     }
 
     private void startIntervalCheckup(int delay) {
-        Observable.timer(delay, TimeUnit.MILLISECONDS)
+        Observable.timer(delay, TimeUnit.SECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<Long>() {
                     @Override
@@ -105,8 +106,9 @@ public class MainService extends Service {
             ExpressData data = whatsUpActionCreator.doit(
                     location, location.getSpeed(), location.getLatitude(), location.getLongitude());
             if (whatsUpActionCreator.getBehavior() == WhatsUpActionCreator.Behavior.PRINT) {
-                Log.d("Log", data.toString());
+                startAlertActivity(data);
                 startIntervalCheckup(5);
+                Log.d("Log", data.toString());
             } else {
                 startIntervalCheckup(1);
             }
@@ -115,9 +117,10 @@ public class MainService extends Service {
         }
     }
 
-    private void startAlertActivity() {
-        Intent i = new Intent(this, MainActivity.class);
+    private void startAlertActivity(ExpressData data) {
+        Intent i = new Intent(this, AlertActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("data", data);
         startActivity(i);
     }
 }

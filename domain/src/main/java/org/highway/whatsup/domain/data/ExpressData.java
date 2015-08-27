@@ -1,11 +1,14 @@
 package org.highway.whatsup.domain.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.highway.whatsup.data.physics.SpeedMeter;
 
 /**
  * Created by engeng on 8/23/15.
  */
-public class ExpressData {
+public class ExpressData implements Parcelable {
 
     private String cctvUrl, msg;
     private float speed;
@@ -90,4 +93,47 @@ public class ExpressData {
     public void setRelativePosition(float relativePosition) {
         this.relativePosition = relativePosition;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.cctvUrl);
+        dest.writeString(this.msg);
+        dest.writeFloat(this.speed);
+        dest.writeDouble(this.lat);
+        dest.writeDouble(this.lng);
+        dest.writeInt(this.progressionSpeed == null ? -1 : this.progressionSpeed.ordinal());
+        dest.writeString(this.expressWayName);
+        dest.writeString(this.direction);
+        dest.writeInt(this.expressWayId);
+        dest.writeFloat(this.relativePosition);
+    }
+
+    protected ExpressData(Parcel in) {
+        this.cctvUrl = in.readString();
+        this.msg = in.readString();
+        this.speed = in.readFloat();
+        this.lat = in.readDouble();
+        this.lng = in.readDouble();
+        int tmpProgressionSpeed = in.readInt();
+        this.progressionSpeed = tmpProgressionSpeed == -1 ? null : SpeedMeter.Progression.values()[tmpProgressionSpeed];
+        this.expressWayName = in.readString();
+        this.direction = in.readString();
+        this.expressWayId = in.readInt();
+        this.relativePosition = in.readFloat();
+    }
+
+    public static final Parcelable.Creator<ExpressData> CREATOR = new Parcelable.Creator<ExpressData>() {
+        public ExpressData createFromParcel(Parcel source) {
+            return new ExpressData(source);
+        }
+
+        public ExpressData[] newArray(int size) {
+            return new ExpressData[size];
+        }
+    };
 }
