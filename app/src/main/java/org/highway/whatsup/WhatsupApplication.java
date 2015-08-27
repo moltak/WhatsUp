@@ -2,10 +2,10 @@ package org.highway.whatsup;
 
 import android.support.multidex.MultiDexApplication;
 
-import org.highway.whatsup.di.component.ApplicationComponent;
-import org.highway.whatsup.di.component.DaggerApplicationComponent;
+import org.highway.whatsup.di.component.ServiceComponent;
+import org.highway.whatsup.di.component.DaggerServiceComponent;
 import org.highway.whatsup.di.component.DaggerLocationComponent;
-import org.highway.whatsup.di.module.ApplicationModule;
+import org.highway.whatsup.di.module.ServiceModule;
 import org.highway.whatsup.di.component.LocationComponent;
 import org.highway.whatsup.di.module.LocationModule;
 
@@ -23,12 +23,12 @@ public class WhatsupApplication extends MultiDexApplication {
     }
 
     private void initializeComponents() {
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+        ServiceComponent serviceComponent = DaggerServiceComponent.builder()
+                .serviceModule(new ServiceModule(this))
                 .build();
 
         locationComponent = DaggerLocationComponent.builder()
-                .applicationComponent(applicationComponent)
+                .serviceComponent(serviceComponent)
                 .locationModule(new LocationModule())
                 .build();
     }

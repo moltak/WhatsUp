@@ -38,7 +38,7 @@ public class LocationUpdateService extends Service {
         locationController.setLocationParams(updateTime, LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         locationController.locationUpdateStart(true);
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override

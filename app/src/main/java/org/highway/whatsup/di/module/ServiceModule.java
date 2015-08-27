@@ -13,10 +13,10 @@ import dagger.Provides;
  * Created by engeng on 7/29/15.
  */
 @Module
-public class ApplicationModule {
+public class ServiceModule {
     private final Context applicationContext;
 
-    public ApplicationModule(Context applicationContext) {
+    public ServiceModule(Context applicationContext) {
         this.applicationContext = applicationContext;
     }
 
