@@ -2,7 +2,7 @@ package org.highway.whatsup.di.component;
 
 import org.highway.whatsup.data.scope.PerApp;
 import org.highway.whatsup.di.module.LocationModule;
-import org.highway.whatsup.service.LocationUpdateService;
+import org.highway.whatsup.location.LocationController;
 
 import dagger.Component;
 
@@ -14,5 +14,5 @@ import dagger.Component;
         dependencies = ServiceComponent.class,
         modules = LocationModule.class)
 public interface LocationComponent {
-    void inject(LocationUpdateService locationUpdateService);
+    LocationController locationController();
 }

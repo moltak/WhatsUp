@@ -10,14 +10,19 @@ import com.squareup.otto.Subscribe;
 
 import org.highway.whatsup.WhatsupApplication;
 import org.highway.whatsup.bus.BusProvider;
+import org.highway.whatsup.di.component.DaggerLocationComponent;
+import org.highway.whatsup.di.component.DaggerServiceComponent;
+import org.highway.whatsup.di.component.ServiceComponent;
+import org.highway.whatsup.di.module.LocationModule;
+import org.highway.whatsup.di.module.ServiceModule;
 import org.highway.whatsup.location.LocationController;
 import org.highway.whatsup.location.LocationEvent;
 
 import javax.inject.Inject;
 
-public class LocationUpdateService extends Service {
+public class MainService extends Service {
 
-    @Inject LocationController locationController;
+    LocationController locationController;
     private final int updateTime = 5000;
 
     @Override
@@ -29,7 +34,16 @@ public class LocationUpdateService extends Service {
     public void onCreate() {
         super.onCreate();
         BusProvider.getUIBusInstance().register(this);
-        ((WhatsupApplication)getApplication()).getLocationComponent().inject(this);
+
+        ServiceComponent serviceComponent = DaggerServiceComponent.builder()
+                .serviceModule(new ServiceModule(getApplicationContext()))
+                .build();
+
+        locationController = DaggerLocationComponent.builder()
+                .serviceComponent(serviceComponent)
+                .locationModule(new LocationModule())
+                .build()
+                .locationController();
     }
 
     @Override

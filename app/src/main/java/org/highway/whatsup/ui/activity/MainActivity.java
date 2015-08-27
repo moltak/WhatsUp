@@ -16,7 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import org.highway.whatsup.R;
-import org.highway.whatsup.service.LocationUpdateService;
+import org.highway.whatsup.service.MainService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mainDrawerLayout.setDrawerListener(drawerToggle);
         mainDrawerNavigationView.setNavigationItemSelectedListener(new MainNavitationItemSelectedListener());
 
-        startService(new Intent(this, LocationUpdateService.class));
+        startService(new Intent(this, MainService.class));
         setupMapFragment(savedInstanceState);
     }
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        stopService(new Intent(this, LocationUpdateService.class));
+        stopService(new Intent(this, MainService.class));
         super.onDestroy();
     }
 

@@ -13,8 +13,7 @@ import dagger.Provides;
  */
 @Module
 public class LocationModule {
-    @Provides @PerApp
-    LocationController provideLocationController(Context applicationContext) {
+    @Provides LocationController provideLocationController(Context applicationContext) {
         return new LocationController(applicationContext);
     }
 }
