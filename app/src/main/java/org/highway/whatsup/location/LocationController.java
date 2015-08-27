@@ -12,6 +12,8 @@ import com.google.android.gms.location.LocationServices;
 
 import org.highway.whatsup.bus.BusProvider;
 
+import javax.inject.Inject;
+
 public class LocationController
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener, LocationRetriever {
@@ -23,7 +25,7 @@ public class LocationController
     private Location lastLocation;
     private boolean isService = false;
 
-    public LocationController(Context context){
+    @Inject public LocationController(Context context) {
         googleApiClient = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)

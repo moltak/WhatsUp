@@ -46,6 +46,11 @@ public class ExpressData {
         return progressionSpeed;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Msg: %s, cctvUrl: %s, speed: %3.2ff", msg, cctvUrl, speed);
+    }
+
     /**
      * Below data for next version.
      * When we can know the position to relative on express way.

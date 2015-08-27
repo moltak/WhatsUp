@@ -55,12 +55,6 @@ public class WhatsUpActionCreatorTest {
     }
 
     @Test
-    public void shouldHasDefaultActionCreator() {
-        DefaultActionCreator actionCreator = component.defaultActionCreator();
-        assertThat(actionCreator, notNullValue());
-    }
-
-    @Test
     public void shouldReturnMsgNullBehaviorNOTHING() {
         try {
             Location mockLocation = mock(Location.class);

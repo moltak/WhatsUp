@@ -4,6 +4,7 @@ import org.highway.whatsup.actioncreator.WhatsUpActionCreator;
 import org.highway.whatsup.data.scope.PerApp;
 import org.highway.whatsup.domain.actioncreator.DefaultActionCreator;
 import org.highway.whatsup.domain.di.component.DefaultComponent;
+import org.highway.whatsup.location.LocationController;
 
 import dagger.Component;
 
@@ -13,11 +14,12 @@ import dagger.Component;
 @PerApp
 @Component(
         dependencies = {
+                ServiceComponent.class,
                 DefaultComponent.class,
-                ServiceComponent.class
+                LocationComponent.class
         }
 )
 public interface WhatsUpComponent {
-        DefaultActionCreator defaultActionCreator();
         WhatsUpActionCreator whatsUpActionCreator();
+        LocationController locationController();
 }
