@@ -24,6 +24,7 @@ import org.highway.whatsup.domain.di.module.BoundsCalculatorModule;
 import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.highway.whatsup.location.LocationController;
+import org.highway.whatsup.ui.activity.MainActivity;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -112,5 +113,11 @@ public class MainService extends Service {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void startAlertActivity() {
+        Intent i = new Intent(this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 }
