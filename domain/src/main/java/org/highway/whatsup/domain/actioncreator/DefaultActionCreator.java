@@ -34,7 +34,7 @@ public class DefaultActionCreator {
     public ExpressData doit(float speed, double lat, double lng) {
         SpeedMeter.Progression progressionSpeed = getProgression(speed);
         if(progressionSpeed == SpeedMeter.Progression.HIGH_SPEED) {
-            return new ExpressData(speed, lat, lng, progressionSpeed, null, null, 0);
+            return new ExpressData(speed, lat, lng, progressionSpeed);
         }
 
         return getExpressWayData(speed, lat, lng, progressionSpeed);
@@ -52,7 +52,7 @@ public class DefaultActionCreator {
             e.printStackTrace();
         }
 
-        return new ExpressData(speed, lat, lng, progressionSpeed, null, null, 0);
+        return new ExpressData(speed, lat, lng, progressionSpeed);
     }
 
     private ExpressData retrieveExpressWayData(
@@ -66,30 +66,63 @@ public class DefaultActionCreator {
                 new Func3<KoExAccidentApi.Response, KoExEventApi.Response, KoExCctvApi.Response, ExpressData>() {
                     @Override
                     public ExpressData call(KoExAccidentApi.Response accident, KoExEventApi.Response event, KoExCctvApi.Response cctv) {
-                        String msg = "", cctvUrl = "";
-                        int laneBlockType = 0;
+                        String cctvUrl = "";
+                        ExpressParsedData data = new ExpressParsedData();
+
                         if (accident.getDataCount() != 0) {
-                            msg = accident.getData().get(0).getExpectedDetourMsg();
-                            laneBlockType = parseLaneBlockType(accident);
+                            data = new ExpressParsedData(accident);
                         }
                         if (event.getDataCount() != 0) {
-                            msg = event.getData().get(0).getExpectedDetourMsg();
-                            laneBlockType = parseLaneBlockType(accident);
+                            data = new ExpressParsedData(event);
                         }
                         if (cctv.getDataCount() != 0) {
                             cctvUrl = cctv.getDatas().get(0).getCctvUrl();
                         }
-                        return new ExpressData(speed, lat, lng, progressionSpeed, cctvUrl, msg, laneBlockType);
+                        return new ExpressData(
+                                speed, lat, lng, data.occuredLat, data.occuredLng, progressionSpeed,
+                                cctvUrl, data.msg, data.eventDirection, data.laneBlockType, data.type);
                     }
                 });
         return o.toBlocking().toFuture().get();
     }
 
-    private int parseLaneBlockType(KoExAccidentApi.Response accident) {
+    private int parseLaneBlockType(String blockType) {
         try {
-            return Integer.parseInt(accident.getData().get(0).getLanesBlockType());
+            return Integer.parseInt(blockType);
         } catch (NumberFormatException e) {
             return 0;
+        }
+    }
+
+    private class ExpressParsedData {
+        final String msg, eventDirection;
+        final int laneBlockType;
+        final double occuredLat, occuredLng;
+        final ExpressData.Type type;
+
+        public ExpressParsedData() {
+            msg = eventDirection = "";
+            laneBlockType = 0;
+            occuredLat = occuredLng = 0;
+            type = ExpressData.Type.NONE;
+        }
+
+        public ExpressParsedData(KoExAccidentApi.Response accident) {
+            msg = accident.getData().get(0).getIncidentMsg();
+            occuredLat = accident.getData().get(0).getCoordY();
+            occuredLng = accident.getData().get(0).getCoordX();
+            laneBlockType = parseLaneBlockType(accident.getData().get(0).getLanesBlockType());
+            type = ExpressData.Type.ACCIDENT;
+            eventDirection = accident.getData().get(0).getEventDirection();
+        }
+
+        public ExpressParsedData(KoExEventApi.Response event) {
+            msg = event.getData().get(0).getEventStatusMsg();
+            occuredLat = event.getData().get(0).getCoordY();
+            occuredLng = event.getData().get(0).getCoordX();
+            laneBlockType = parseLaneBlockType(event.getData().get(0).getLanesBlockType());
+            type = ExpressData.Type.CONSTRUCTION;
+            eventDirection = event.getData().get(0).getEventDirection();
         }
     }
 }
