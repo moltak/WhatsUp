@@ -69,7 +69,7 @@ public class MainService extends Service {
         whatsUpActionCreator = whatsUpComponent.whatsUpActionCreator();
         locationController = whatsUpComponent.locationController();
 
-        startIntervalCheckup(6);
+        startIntervalCheckup(1);
     }
 
     @Override
