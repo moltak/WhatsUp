@@ -105,10 +105,9 @@ public class MainService extends Service {
                     location, location.getSpeed(), location.getLatitude(), location.getLongitude());
             if (whatsUpActionCreator.getBehavior() == WhatsUpActionCreator.Behavior.PRINT) {
                 startAlertActivity(data);
-                startIntervalCheckup(5);
-                Log.d("Log", data.toString());
+//                startIntervalCheckup(5);
             } else {
-                startIntervalCheckup(1);
+//                startIntervalCheckup(1);
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();

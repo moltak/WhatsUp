@@ -9,6 +9,21 @@
         android:layout_height="60dp"
         android:text="주의"
         android:gravity="center"
-        android:background="#ff8080"/>
+        android:background="#ff8080"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/changeCctv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="change cctv"/>
 
 </LinearLayout>
