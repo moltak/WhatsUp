@@ -12,17 +12,45 @@ public class ExpressData implements Parcelable {
 
     private String cctvUrl, msg;
     private float speed;
-    private double lat, lng;
+    private double lat, lng, occuredLat, occuredLng;
     private SpeedMeter.Progression progressionSpeed;
+    private String LANE_BLOCK_TYPE[] = {
+            "통제없음", "갓길통제", "차로부분통제", "전면통제"};
+    private String laneBlock = LANE_BLOCK_TYPE[0];
+    private String eventDirection;
+    private Type type;
 
-    public ExpressData(float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed,
-                       String cctvUrl, String msg) {
+    public ExpressData(float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed) {
+        this.speed = speed;
+        this.lat = lat;
+        this.lng = lng;
+        this.progressionSpeed = progressionSpeed;
+    }
+
+
+
+    public enum Type {
+        CONSTRUCTION, NONE, ACCIDENT;
+    }
+    public ExpressData(float speed, double lat, double lng, double occuredLat, double occuredLng,
+                       SpeedMeter.Progression progressionSpeed, String cctvUrl, String msg,
+                       String eventDirection, int laneBlockType, ExpressData.Type type) {
         this.cctvUrl = cctvUrl;
         this.msg = msg;
         this.speed = speed;
         this.lat = lat;
         this.lng = lng;
+        this.occuredLat = occuredLat;
+        this.occuredLng = occuredLng;
         this.progressionSpeed = progressionSpeed;
+        try {
+            this.laneBlock = LANE_BLOCK_TYPE[laneBlockType];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            this.laneBlock = LANE_BLOCK_TYPE[0];
+        }
+
+        this.eventDirection = eventDirection;
+        this.type = type;
     }
 
     public String getCctvUrl() {
@@ -31,6 +59,10 @@ public class ExpressData implements Parcelable {
 
     public String getMsg() {
         return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public float getSpeed() {
@@ -49,9 +81,13 @@ public class ExpressData implements Parcelable {
         return progressionSpeed;
     }
 
+    public String getLaneBlock() {
+        return laneBlock;
+    }
+
     @Override
     public String toString() {
-        return String.format("Msg: %s, cctvUrl: %s, speed: %3.2ff", msg, cctvUrl, speed);
+        return String.format("Msg: %s, cctvUrl: %s, speed: %3.2f, block: %s", msg, cctvUrl, speed, laneBlock);
     }
 
     /**
@@ -106,7 +142,13 @@ public class ExpressData implements Parcelable {
         dest.writeFloat(this.speed);
         dest.writeDouble(this.lat);
         dest.writeDouble(this.lng);
+        dest.writeDouble(this.occuredLat);
+        dest.writeDouble(this.occuredLng);
         dest.writeInt(this.progressionSpeed == null ? -1 : this.progressionSpeed.ordinal());
+        dest.writeStringArray(this.LANE_BLOCK_TYPE);
+        dest.writeString(this.laneBlock);
+        dest.writeString(this.eventDirection);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeString(this.expressWayName);
         dest.writeString(this.direction);
         dest.writeInt(this.expressWayId);
@@ -119,15 +161,22 @@ public class ExpressData implements Parcelable {
         this.speed = in.readFloat();
         this.lat = in.readDouble();
         this.lng = in.readDouble();
+        this.occuredLat = in.readDouble();
+        this.occuredLng = in.readDouble();
         int tmpProgressionSpeed = in.readInt();
         this.progressionSpeed = tmpProgressionSpeed == -1 ? null : SpeedMeter.Progression.values()[tmpProgressionSpeed];
+        this.LANE_BLOCK_TYPE = in.createStringArray();
+        this.laneBlock = in.readString();
+        this.eventDirection = in.readString();
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : Type.values()[tmpType];
         this.expressWayName = in.readString();
         this.direction = in.readString();
         this.expressWayId = in.readInt();
         this.relativePosition = in.readFloat();
     }
 
-    public static final Parcelable.Creator<ExpressData> CREATOR = new Parcelable.Creator<ExpressData>() {
+    public static final Creator<ExpressData> CREATOR = new Creator<ExpressData>() {
         public ExpressData createFromParcel(Parcel source) {
             return new ExpressData(source);
         }

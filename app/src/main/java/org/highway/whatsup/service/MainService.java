@@ -25,13 +25,11 @@ import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.highway.whatsup.location.LocationController;
 import org.highway.whatsup.ui.activity.AlertActivity;
-import org.highway.whatsup.ui.activity.MainActivity;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscription;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -71,7 +69,7 @@ public class MainService extends Service {
         whatsUpActionCreator = whatsUpComponent.whatsUpActionCreator();
         locationController = whatsUpComponent.locationController();
 
-        startIntervalCheckup(6);
+        startIntervalCheckup(1);
     }
 
     @Override
@@ -107,10 +105,9 @@ public class MainService extends Service {
                     location, location.getSpeed(), location.getLatitude(), location.getLongitude());
             if (whatsUpActionCreator.getBehavior() == WhatsUpActionCreator.Behavior.PRINT) {
                 startAlertActivity(data);
-                startIntervalCheckup(5);
-                Log.d("Log", data.toString());
+//                startIntervalCheckup(5);
             } else {
-                startIntervalCheckup(1);
+//                startIntervalCheckup(1);
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
