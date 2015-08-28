@@ -34,7 +34,7 @@ public class DefaultActionCreator {
     public ExpressData doit(float speed, double lat, double lng) {
         SpeedMeter.Progression progressionSpeed = getProgression(speed);
         if(progressionSpeed == SpeedMeter.Progression.HIGH_SPEED) {
-            return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
+            return new ExpressData(speed, lat, lng, progressionSpeed, null, null, 0);
         }
 
         return getExpressWayData(speed, lat, lng, progressionSpeed);
@@ -52,7 +52,7 @@ public class DefaultActionCreator {
             e.printStackTrace();
         }
 
-        return new ExpressData(speed, lat, lng, progressionSpeed, null, null);
+        return new ExpressData(speed, lat, lng, progressionSpeed, null, null, 0);
     }
 
     private ExpressData retrieveExpressWayData(
@@ -67,18 +67,29 @@ public class DefaultActionCreator {
                     @Override
                     public ExpressData call(KoExAccidentApi.Response accident, KoExEventApi.Response event, KoExCctvApi.Response cctv) {
                         String msg = "", cctvUrl = "";
+                        int laneBlockType = 0;
                         if (accident.getDataCount() != 0) {
                             msg = accident.getData().get(0).getExpectedDetourMsg();
+                            laneBlockType = parseLaneBlockType(accident);
                         }
                         if (event.getDataCount() != 0) {
                             msg = event.getData().get(0).getExpectedDetourMsg();
+                            laneBlockType = parseLaneBlockType(accident);
                         }
                         if (cctv.getDataCount() != 0) {
                             cctvUrl = cctv.getDatas().get(0).getCctvUrl();
                         }
-                        return new ExpressData(speed, lat, lng, progressionSpeed, cctvUrl, msg);
+                        return new ExpressData(speed, lat, lng, progressionSpeed, cctvUrl, msg, laneBlockType);
                     }
                 });
         return o.toBlocking().toFuture().get();
+    }
+
+    private int parseLaneBlockType(KoExAccidentApi.Response accident) {
+        try {
+            return Integer.parseInt(accident.getData().get(0).getLanesBlockType());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }

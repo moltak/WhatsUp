@@ -14,15 +14,23 @@ public class ExpressData implements Parcelable {
     private float speed;
     private double lat, lng;
     private SpeedMeter.Progression progressionSpeed;
+    private String LANE_BLOCK_TYPE[] = {
+            "통제없음", "갓길통제", "차로부분통제", "전면통제"};
+    private String laneBlock = LANE_BLOCK_TYPE[0];
 
     public ExpressData(float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed,
-                       String cctvUrl, String msg) {
+                       String cctvUrl, String msg, int laneBlockType) {
         this.cctvUrl = cctvUrl;
         this.msg = msg;
         this.speed = speed;
         this.lat = lat;
         this.lng = lng;
         this.progressionSpeed = progressionSpeed;
+        try {
+            this.laneBlock = LANE_BLOCK_TYPE[laneBlockType];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            this.laneBlock = LANE_BLOCK_TYPE[0];
+        }
     }
 
     public String getCctvUrl() {
@@ -49,9 +57,13 @@ public class ExpressData implements Parcelable {
         return progressionSpeed;
     }
 
+    public String getLaneBlock() {
+        return laneBlock;
+    }
+
     @Override
     public String toString() {
-        return String.format("Msg: %s, cctvUrl: %s, speed: %3.2ff", msg, cctvUrl, speed);
+        return String.format("Msg: %s, cctvUrl: %s, speed: %3.2f, block: %s", msg, cctvUrl, speed, laneBlock);
     }
 
     /**
@@ -94,6 +106,7 @@ public class ExpressData implements Parcelable {
         this.relativePosition = relativePosition;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,6 +120,8 @@ public class ExpressData implements Parcelable {
         dest.writeDouble(this.lat);
         dest.writeDouble(this.lng);
         dest.writeInt(this.progressionSpeed == null ? -1 : this.progressionSpeed.ordinal());
+        dest.writeStringArray(this.LANE_BLOCK_TYPE);
+        dest.writeString(this.laneBlock);
         dest.writeString(this.expressWayName);
         dest.writeString(this.direction);
         dest.writeInt(this.expressWayId);
@@ -121,13 +136,15 @@ public class ExpressData implements Parcelable {
         this.lng = in.readDouble();
         int tmpProgressionSpeed = in.readInt();
         this.progressionSpeed = tmpProgressionSpeed == -1 ? null : SpeedMeter.Progression.values()[tmpProgressionSpeed];
+        this.LANE_BLOCK_TYPE = in.createStringArray();
+        this.laneBlock = in.readString();
         this.expressWayName = in.readString();
         this.direction = in.readString();
         this.expressWayId = in.readInt();
         this.relativePosition = in.readFloat();
     }
 
-    public static final Parcelable.Creator<ExpressData> CREATOR = new Parcelable.Creator<ExpressData>() {
+    public static final Creator<ExpressData> CREATOR = new Creator<ExpressData>() {
         public ExpressData createFromParcel(Parcel source) {
             return new ExpressData(source);
         }

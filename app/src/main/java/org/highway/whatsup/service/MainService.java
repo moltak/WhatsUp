@@ -25,13 +25,11 @@ import org.highway.whatsup.domain.di.module.DefaultActionCreatorModule;
 import org.highway.whatsup.domain.di.module.SpeedMeterModule;
 import org.highway.whatsup.location.LocationController;
 import org.highway.whatsup.ui.activity.AlertActivity;
-import org.highway.whatsup.ui.activity.MainActivity;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscription;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 

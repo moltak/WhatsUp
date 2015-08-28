@@ -92,7 +92,7 @@ public class WhatsUpActionCreator {
         if (r.getCode() == 1002) {
             msg = r.getMsg();
         }
-        return new ExpressData(speed, lat, lng, defaultActionCreator.getProgression(speed), null, msg);
+        return new ExpressData(speed, lat, lng, defaultActionCreator.getProgression(speed), null, msg, 0);
     }
 
     /**
