@@ -20,18 +20,22 @@ public class ExpressData implements Parcelable {
     private String eventDirection;
     private Type type;
 
+    public enum Type {
+        CONSTRUCTION, NONE, ACCIDENT
+    }
+
     public ExpressData(float speed, double lat, double lng, SpeedMeter.Progression progressionSpeed) {
         this.speed = speed;
-        this.lat = lat;
-        this.lng = lng;
+        this.lat = this.occuredLat = lat; // 상대 거리 보여줄때 사건지점과의 거리를 0으로 보여주기 위해.
+        this.lng = this.occuredLng = lng;
         this.progressionSpeed = progressionSpeed;
+
+        this.laneBlock = LANE_BLOCK_TYPE[0];
+        this.eventDirection = "";
+        this.type = Type.NONE;
+        this.cctvUrl = "";
     }
 
-
-
-    public enum Type {
-        CONSTRUCTION, NONE, ACCIDENT;
-    }
     public ExpressData(float speed, double lat, double lng, double occuredLat, double occuredLng,
                        SpeedMeter.Progression progressionSpeed, String cctvUrl, String msg,
                        String eventDirection, int laneBlockType, ExpressData.Type type) {
@@ -83,6 +87,22 @@ public class ExpressData implements Parcelable {
 
     public String getLaneBlock() {
         return laneBlock;
+    }
+
+    public double getOccuredLat() {
+        return occuredLat;
+    }
+
+    public double getOccuredLng() {
+        return occuredLng;
+    }
+
+    public String getEventDirection() {
+        return eventDirection;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override
