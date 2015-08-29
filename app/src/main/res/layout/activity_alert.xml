@@ -175,7 +175,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <Button
-        android:id="@+id/changeCctv"
+        android:id="@+id/buttonContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3f51bb"

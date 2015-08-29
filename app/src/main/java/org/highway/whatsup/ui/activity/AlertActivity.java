@@ -1,9 +1,11 @@
 package org.highway.whatsup.ui.activity;
 
-import android.media.MediaPlayer;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import org.highway.whatsup.R;
@@ -24,11 +26,12 @@ import rx.functions.Action1;
 public class AlertActivity extends AppCompatActivity {
 
     @Bind(R.id.videoView) VideoView videoView;
-    @Bind(R.id.changeCctv) Button changeCctv;
-
-    private String VIDEOS[] = {
-            "http://cctv.ktict.co.kr/99.mp4",
-            "http://cctv.ktict.co.kr/175.mp4"};
+    @Bind(R.id.buttonContact) Button changeCctv;
+    @Bind(R.id.textViewAlertDesc) TextView textViewAlertDesc;
+    @Bind(R.id.textViewSpeed) TextView textViewSpeed;
+    @Bind(R.id.textViewDistance) TextView textViewDistance;
+    @Bind(R.id.textViewLaneBlockState) TextView textViewLaneBlockState;
+    @Bind(R.id.textViewDirection) TextView textViewDirection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,17 @@ public class AlertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alert);
         ButterKnife.bind(this);
 
-//        ExpressData data = getIntent().getExtras().getParcelable("data");
+        ExpressData data = getIntent().getExtras().getParcelable("data");
+        textViewAlertDesc.setText(data.getMsg());
+        textViewSpeed.setText(String.format("%3.0fKm/h", data.getSpeed() * 3.6));
+        textViewLaneBlockState.setText(data.getLaneBlock());
+        textViewDistance.setText(String.format("%3.1fKm", calculateDistance(data)));
+        textViewDirection.setText(data.getDirection());
+
+        if (!TextUtils.isEmpty(data.getCctvUrl())) {
+            videoView.setVideoPath(data.getCctvUrl());
+            videoView.start();
+        }
 
         Observable.timer(10, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,15 +59,18 @@ public class AlertActivity extends AppCompatActivity {
 //                        finish();
                     }
                 });
-
-        videoView.setVideoPath(VIDEOS[0]);
-        videoView.start();
     }
 
-    @OnClick(R.id.changeCctv)
-    public void changeVideo() {
-        videoView.stopPlayback();
-        videoView.setVideoPath(VIDEOS[1]);
-        videoView.start();
+    @OnClick(R.id.buttonContact)
+    public void contactButtonClicked() {
+    }
+
+    private double calculateDistance(ExpressData expressData) {
+        float result[] = new float[5];
+        Location.distanceBetween(
+                expressData.getLat(), expressData.getLng(),
+                expressData.getOccuredLat(), expressData.getOccuredLng(),
+                result);
+        return result[0];
     }
 }

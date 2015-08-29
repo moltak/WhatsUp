@@ -86,20 +86,12 @@ public class DefaultActionCreator {
         return o.toBlocking().toFuture().get();
     }
 
-    private int parseLaneBlockType(String blockType) {
-        try {
-            return Integer.parseInt(blockType);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
-    }
-
     private class ExpressParsedData {
+
         final String msg, eventDirection;
         final int laneBlockType;
         final double occuredLat, occuredLng;
         final ExpressData.Type type;
-
         public ExpressParsedData() {
             msg = eventDirection = "";
             laneBlockType = 0;
@@ -123,6 +115,14 @@ public class DefaultActionCreator {
             laneBlockType = parseLaneBlockType(event.getData().get(0).getLanesBlockType());
             type = ExpressData.Type.CONSTRUCTION;
             eventDirection = event.getData().get(0).getEventDirection();
+        }
+
+        private int parseLaneBlockType(String blockType) {
+            try {
+                return Integer.parseInt(blockType);
+            } catch (NumberFormatException e) {
+                return 0;
+            }
         }
     }
 }
