@@ -9,7 +9,7 @@
         android:id="@+id/mainToolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <TextView
@@ -65,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:paddingTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="30Km/h"
                 android:textSize="26sp"
                 android:textColor="#404040"/>
@@ -93,7 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:paddingTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="25Km"
                 android:textSize="26sp"
                 android:textColor="#404040"/>
@@ -128,7 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:paddingTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="차로부분통제"
                 android:textSize="26sp"
                 android:textColor="#404040"/>
@@ -156,7 +159,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:paddingTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="서울방향"
                 android:textSize="26sp"
                 android:textColor="#404040"/>
@@ -165,9 +169,10 @@
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:id="@+id/changeCctv"
